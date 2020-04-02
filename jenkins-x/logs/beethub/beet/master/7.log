@@ -1,0 +1,295 @@
+
+Showing logs for build [32mbeethub-beet-master-release-jhckc-7[0m stage [32mfrom-build-pack[0m and container [32mstep-credential-initializer-4sgs9[0m
+{"level":"warn","ts":1585853969.0557554,"logger":"fallback-logger","caller":"logging/config.go:69","msg":"Fetch GitHub commit ID from kodata failed: \"ref: refs/heads/0.8.0-**-support-backwards-incompats\" is not a valid GitHub commit ID"}
+{"level":"info","ts":1585853969.056148,"logger":"fallback-logger","caller":"creds-init/main.go:40","msg":"Credentials initialized."}
+
+Showing logs for build [32mbeethub-beet-master-release-jhckc-7[0m stage [32mfrom-build-pack[0m and container [32mstep-working-dir-initializer-757g5[0m
+{"level":"warn","ts":1585853969.774666,"logger":"fallback-logger","caller":"logging/config.go:69","msg":"Fetch GitHub commit ID from kodata failed: open /var/run/ko/HEAD: no such file or directory"}
+{"level":"info","ts":1585853969.7767584,"logger":"fallback-logger","caller":"bash/main.go:64","msg":"Successfully executed command \"sh -c mkdir -p /workspace/source\"; output "}
+
+Showing logs for build [32mbeethub-beet-master-release-jhckc-7[0m stage [32mfrom-build-pack[0m and container [32mstep-place-tools[0m
+
+Showing logs for build [32mbeethub-beet-master-release-jhckc-7[0m stage [32mfrom-build-pack[0m and container [32mstep-git-source-beethub-beet-master-release-jhckc-xhzzp[0m
+{"level":"warn","ts":1585853992.9448981,"logger":"fallback-logger","caller":"logging/config.go:69","msg":"Fetch GitHub commit ID from kodata failed: \"ref: refs/heads/0.8.0-**-support-backwards-incompats\" is not a valid GitHub commit ID"}
+{"level":"info","ts":1585853993.2603006,"logger":"fallback-logger","caller":"git/git.go:103","msg":"Successfully cloned https://github.com/beethub/beet.git @ v0.0.6 in path /workspace/source"}
+
+Showing logs for build [32mbeethub-beet-master-release-jhckc-7[0m stage [32mfrom-build-pack[0m and container [32mstep-git-merge[0m
+Using SHAs from PULL_REFS=master:5f3b68ca8ac9e27d7a3bf3f7c4ffe20382ecbd6b
+WARNING: no SHAs to merge, falling back to initial cloned commit
+
+Showing logs for build [32mbeethub-beet-master-release-jhckc-7[0m stage [32mfrom-build-pack[0m and container [32mstep-setup-jx-git-credentials[0m
+Generated Git credentials file /workspace/xdg_config/git/credentials
+
+Showing logs for build [32mbeethub-beet-master-release-jhckc-7[0m stage [32mfrom-build-pack[0m and container [32mstep-build-npmrc[0m
+Command "credential" is deprecated, it will be removed on Jun 1 2020.  This is replaced by Tekton's mounted secrets
+WARNING: failed to find Secret npm-token in namespace **
+
+Showing logs for build [32mbeethub-beet-master-release-jhckc-7[0m stage [32mfrom-build-pack[0m and container [32mstep-build-npm-install[0m
+
+> core-js@2.6.11 postinstall /workspace/source/node_modules/babel-runtime/node_modules/core-js
+> node -e "try{require('./postinstall')}catch(e){}"
+
+
+> core-js@3.6.4 postinstall /workspace/source/node_modules/core-js
+> node -e "try{require('./postinstall')}catch(e){}"
+
+
+> core-js-pure@3.6.4 postinstall /workspace/source/node_modules/core-js-pure
+> node -e "try{require('./postinstall')}catch(e){}"
+
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@1.2.12 (node_modules/webpack-dev-server/node_modules/fsevents):
+npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@1.2.12: wanted {"os":"darwin","arch":"any"} (current: {"os":"linux","arch":"x64"})
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@1.2.12 (node_modules/watchpack/node_modules/fsevents):
+npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@1.2.12: wanted {"os":"darwin","arch":"any"} (current: {"os":"linux","arch":"x64"})
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@1.2.12 (node_modules/jest-haste-map/node_modules/fsevents):
+npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@1.2.12: wanted {"os":"darwin","arch":"any"} (current: {"os":"linux","arch":"x64"})
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@2.1.2 (node_modules/fsevents):
+npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@2.1.2: wanted {"os":"darwin","arch":"any"} (current: {"os":"linux","arch":"x64"})
+
+added 1664 packages from 836 contributors and audited 920687 packages in 31.878s
+found 0 vulnerabilities
+
+
+Showing logs for build [32mbeethub-beet-master-release-jhckc-7[0m stage [32mfrom-build-pack[0m and container [32mstep-build-npm-test[0m
+
+> beet@0.0.1 test /workspace/source
+> react-scripts test
+
+PASS src/App.test.tsx
+  ✓ renders without crashing (96ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       1 passed, 1 total
+Snapshots:   0 total
+Time:        2.633s
+Ran all test suites.
+
+Showing logs for build [32mbeethub-beet-master-release-jhckc-7[0m stage [32mfrom-build-pack[0m and container [32mstep-build-ui-build[0m
+
+> beet@0.0.1 build /workspace/source
+> react-scripts build
+
+Creating an optimized production build...
+Compiled successfully.
+
+File sizes after gzip:
+
+  97.3 KB   build/static/js/51.335b3ac9.chunk.js
+  24.98 KB  build/static/js/89.9569dc40.chunk.js
+  24.11 KB  build/static/js/4.2097de2d.chunk.js
+  10.71 KB  build/static/js/58.8353b969.chunk.js
+  10.71 KB  build/static/js/57.508ea22b.chunk.js
+  10.12 KB  build/static/js/54.d22c5ce8.chunk.js
+  10.12 KB  build/static/js/53.67fe3ac2.chunk.js
+  7.45 KB   build/static/js/73.8d467f3b.chunk.js
+  7.45 KB   build/static/js/74.d83dc643.chunk.js
+  6.36 KB   build/static/js/61.98b1c291.chunk.js
+  6.36 KB   build/static/js/62.188cd2f7.chunk.js
+  6.21 KB   build/static/js/59.96704081.chunk.js
+  6.21 KB   build/static/js/60.683ac187.chunk.js
+  6.03 KB   build/static/js/52.7994fc55.chunk.js
+  5.73 KB   build/static/js/86.5787360f.chunk.js
+  5.73 KB   build/static/js/87.c8270991.chunk.js
+  5.37 KB   build/static/js/76.cf114298.chunk.js
+  5.37 KB   build/static/js/75.1061e3b1.chunk.js
+  5.36 KB   build/static/js/82.109cb396.chunk.js
+  5.36 KB   build/static/js/83.1446d57d.chunk.js
+  4.96 KB   build/static/js/70.3b713615.chunk.js
+  4.96 KB   build/static/js/69.d687eba1.chunk.js
+  4.7 KB    build/static/js/79.c1383055.chunk.js
+  4.69 KB   build/static/js/66.f9aac265.chunk.js
+  4.54 KB   build/static/js/77.c2babcfc.chunk.js
+  4.54 KB   build/static/js/78.2f4efee1.chunk.js
+  4.52 KB   build/static/js/81.c927437b.chunk.js
+  4.51 KB   build/static/js/80.b14f6e35.chunk.js
+  4.36 KB   build/static/js/71.494797b3.chunk.js
+  4.36 KB   build/static/js/72.06863f14.chunk.js
+  4.28 KB   build/static/js/55.bc9f3e7b.chunk.js
+  4.28 KB   build/static/js/56.fbef87d5.chunk.js
+  4.07 KB   build/static/js/63.22241727.chunk.js
+  4.07 KB   build/static/js/64.68eb366f.chunk.js
+  4.07 KB   build/static/js/stencil-ion-fab_3-ios-entry-js.5e0c53d0.chunk.js
+  4.07 KB   build/static/js/stencil-ion-fab_3-md-entry-js.16a6c6d9.chunk.js
+  3.99 KB   build/static/js/67.de528375.chunk.js
+  3.99 KB   build/static/js/68.719e6815.chunk.js
+  3.98 KB   build/static/js/84.6f3cfb91.chunk.js
+  3.97 KB   build/static/js/85.ca33231c.chunk.js
+  3.72 KB   build/static/js/stencil-ion-tab-bar_2-ios-entry-js.2999694e.chunk.js
+  3.72 KB   build/static/js/stencil-ion-tab-bar_2-md-entry-js.e2904a7d.chunk.js
+  3.67 KB   build/static/css/51.f6437998.chunk.css
+  3.58 KB   build/static/js/65.838f1e85.chunk.js
+  3.55 KB   build/static/js/stencil-ion-popover-ios-entry-js.ff1cd1c0.chunk.js
+  3.55 KB   build/static/js/stencil-ion-popover-md-entry-js.203b75a2.chunk.js
+  3.41 KB   build/static/js/stencil-ion-input-ios-entry-js.1dfeca65.chunk.js
+  3.41 KB   build/static/js/stencil-ion-input-md-entry-js.5e15d9e4.chunk.js
+  3.21 KB   build/static/js/stencil-ion-virtual-scroll-entry-js.c55798bf.chunk.js
+  3.09 KB   build/static/js/stencil-ion-toggle-ios-entry-js.005808b1.chunk.js
+  3.09 KB   build/static/js/stencil-ion-toggle-md-entry-js.27b3dc03.chunk.js
+  2.96 KB   build/static/js/stencil-ion-loading-ios-entry-js.143648f9.chunk.js
+  2.96 KB   build/static/js/stencil-ion-loading-md-entry-js.f0a0cd74.chunk.js
+  2.78 KB   build/static/js/stencil-ion-back-button-ios-entry-js.11b67e3d.chunk.js
+  2.78 KB   build/static/js/stencil-ion-back-button-md-entry-js.315920c1.chunk.js
+  2.74 KB   build/static/js/stencil-ion-textarea-ios-entry-js.4eb6404c.chunk.js
+  2.74 KB   build/static/js/stencil-ion-textarea-md-entry-js.ecbb44ef.chunk.js
+  2.58 KB   build/static/js/stencil-ion-card_5-ios-entry-js.1655b7e5.chunk.js
+  2.58 KB   build/static/js/stencil-ion-card_5-md-entry-js.ac7f04c5.chunk.js
+  2.58 KB   build/static/js/stencil-ion-radio_2-ios-entry-js.d48f423b.chunk.js
+  2.58 KB   build/static/js/stencil-ion-radio_2-md-entry-js.20a027c8.chunk.js
+  2.37 KB   build/static/js/stencil-ion-progress-bar-md-entry-js.d0c30d09.chunk.js
+  2.37 KB   build/static/js/stencil-ion-progress-bar-ios-entry-js.94d7b006.chunk.js
+  2.33 KB   build/static/js/stencil-ion-reorder_2-ios-entry-js.5e6a26b9.chunk.js
+  2.33 KB   build/static/js/stencil-ion-reorder_2-md-entry-js.e1a387dd.chunk.js
+  2.32 KB   build/static/js/stencil-ion-checkbox-md-entry-js.e377b294.chunk.js
+  2.32 KB   build/static/js/stencil-ion-checkbox-ios-entry-js.8b3b652c.chunk.js
+  2.28 KB   build/static/js/stencil-ion-infinite-scroll_2-md-entry-js.ae9b2387.chunk.js
+  2.28 KB   build/static/js/stencil-ion-infinite-scroll_2-ios-entry-js.a3a2e94e.chunk.js
+  2.25 KB   build/static/js/runtime-main.ec992fa8.js
+  2.15 KB   build/static/js/stencil-ion-spinner-entry-js.834027fb.chunk.js
+  2.1 KB    build/static/js/91.2043a7db.chunk.js
+  2.09 KB   build/static/js/88.128dd150.chunk.js
+  2.01 KB   build/static/js/stencil-ion-tab_2-entry-js.818fb369.chunk.js
+  1.93 KB   build/static/js/2.05741cef.chunk.js
+  1.84 KB   build/static/js/main.7a8651a0.chunk.js
+  1.79 KB   build/static/js/stencil-ion-col_3-entry-js.107d11a3.chunk.js
+  1.67 KB   build/static/js/stencil-ion-chip-ios-entry-js.0c8d4707.chunk.js
+  1.67 KB   build/static/js/stencil-ion-chip-md-entry-js.9bd92381.chunk.js
+  1.67 KB   build/static/js/90.cb91e43d.chunk.js
+  1.42 KB   build/static/js/stencil-ion-split-pane-ios-entry-js.baaf72a2.chunk.js
+  1.42 KB   build/static/js/stencil-ion-split-pane-md-entry-js.47bda00d.chunk.js
+  1.38 KB   build/static/js/stencil-ion-avatar_3-md-entry-js.6d0db632.chunk.js
+  1.38 KB   build/static/js/stencil-ion-avatar_3-ios-entry-js.8bba20d6.chunk.js
+  1.27 KB   build/static/css/main.76e5b857.chunk.css
+  1.24 KB   build/static/js/stencil-ion-ripple-effect-entry-js.48d31d3b.chunk.js
+  954 B     build/static/js/5.dd8d9e2d.chunk.js
+  822 B     build/static/js/stencil-ion-text-entry-js.7050c4f7.chunk.js
+  798 B     build/static/js/stencil-ion-backdrop-ios-entry-js.312be226.chunk.js
+  797 B     build/static/js/stencil-ion-backdrop-md-entry-js.0c213d03.chunk.js
+  726 B     build/static/js/stencil-ion-img-entry-js.84102b6e.chunk.js
+  472 B     build/static/js/1.48ed3045.chunk.js
+  462 B     build/static/js/0.768e1194.chunk.js
+  344 B     build/static/js/3.bd839f10.chunk.js
+
+The project was built assuming it is hosted at /.
+You can control this with the homepage field in your package.json.
+
+The build folder is ready to be deployed.
+You may serve it with a static server:
+
+  npm install -g serve
+  serve -s build
+
+Find out more about deployment here:
+
+  bit.ly/CRA-deploy
+
+
+Showing logs for build [32mbeethub-beet-master-release-jhckc-7[0m stage [32mfrom-build-pack[0m and container [32mstep-build-container-build[0m
+[36mINFO[0m[0000] Downloading base image nginx:stable-alpine   
+[36mINFO[0m[0000] Error while retrieving image from cache: getting file info: stat /workspace/sha256:0dfc8450deb8c7f06fbaac27e453ac3262df7d3a93639c4e2f48ee39434ec017: no such file or directory 
+[36mINFO[0m[0000] Downloading base image nginx:stable-alpine   
+[36mINFO[0m[0000] Checking for cached layer docker.io/todo/cache:8a63ea816ef5402b758e67007c46529f2bb21402b663d14ecb4f9c3528d1ec36... 
+[36mINFO[0m[0000] No cached layer found for cmd RUN apk add --no-cache bash 
+[36mINFO[0m[0000] Unpacking rootfs as cmd RUN apk add --no-cache bash requires it. 
+[36mINFO[0m[0001] Taking snapshot of full filesystem...        
+[36mINFO[0m[0002] RUN apk add --no-cache bash                  
+[36mINFO[0m[0002] cmd: /bin/sh                                 
+[36mINFO[0m[0002] args: [-c apk add --no-cache bash]           
+fetch http://dl-cdn.alpinelinux.org/alpine/v3.10/main/x86_64/APKINDEX.tar.gz
+fetch http://dl-cdn.alpinelinux.org/alpine/v3.10/community/x86_64/APKINDEX.tar.gz
+(1/2) Installing readline (8.0.0-r0)
+(2/2) Installing bash (5.0.0-r0)
+Executing bash-5.0.0-r0.post-install
+Executing busybox-1.30.1-r3.trigger
+OK: 30 MiB in 39 packages
+[36mINFO[0m[0002] Taking snapshot of full filesystem...        
+[36mINFO[0m[0002] RUN rm -rf /etc/nginx/conf.d                 
+[36mINFO[0m[0002] cmd: /bin/sh                                 
+[36mINFO[0m[0002] args: [-c rm -rf /etc/nginx/conf.d]          
+[36mINFO[0m[0002] Pushing layer docker.io/todo/cache:8a63ea816ef5402b758e67007c46529f2bb21402b663d14ecb4f9c3528d1ec36 to cache now 
+[36mINFO[0m[0002] Taking snapshot of full filesystem...        
+[36mINFO[0m[0002] Adding whiteout for /etc/nginx/conf.d        
+[36mINFO[0m[0002] Pushing layer docker.io/todo/cache:3a99cd3dc723afa2de5b04eeaf203d405288b2ef273431baf6b6582f4b4616be to cache now 
+[36mINFO[0m[0002] Using files from context: [/workspace/source/conf] 
+[36mINFO[0m[0002] COPY conf /etc/nginx                         
+[36mINFO[0m[0002] Taking snapshot of files...                  
+[36mINFO[0m[0002] Using files from context: [/workspace/source/build] 
+[36mINFO[0m[0002] COPY /build /usr/share/nginx/html            
+[36mINFO[0m[0003] Taking snapshot of files...                  
+[36mINFO[0m[0003] EXPOSE 80                                    
+[36mINFO[0m[0003] cmd: EXPOSE                                  
+[36mINFO[0m[0003] Adding exposed port: 80/tcp                  
+[36mINFO[0m[0003] No files changed in this command, skipping snapshotting. 
+[36mINFO[0m[0003] WORKDIR /usr/share/nginx/html                
+[36mINFO[0m[0003] cmd: workdir                                 
+[36mINFO[0m[0003] Changed working directory to /usr/share/nginx/html 
+[36mINFO[0m[0003] No files changed in this command, skipping snapshotting. 
+[36mINFO[0m[0003] Using files from context: [/workspace/source/env.sh] 
+[36mINFO[0m[0003] COPY ./env.sh .                              
+[36mINFO[0m[0003] Taking snapshot of files...                  
+[36mINFO[0m[0003] Using files from context: [/workspace/source/.env] 
+[36mINFO[0m[0003] COPY .env .                                  
+[36mINFO[0m[0003] Taking snapshot of files...                  
+[36mINFO[0m[0003] RUN chmod +x env.sh                          
+[36mINFO[0m[0003] cmd: /bin/sh                                 
+[36mINFO[0m[0003] args: [-c chmod +x env.sh]                   
+[36mINFO[0m[0003] Taking snapshot of full filesystem...        
+[36mINFO[0m[0003] No files were changed, appending empty layer to config. No layer added to image. 
+[36mINFO[0m[0003] CMD ["/bin/bash", "-c", "/usr/share/nginx/html/env.sh && nginx -g \"daemon off;\""] 
+[36mINFO[0m[0003] No files changed in this command, skipping snapshotting. 
+[36mINFO[0m[0003] Pushing layer docker.io/todo/cache:6cf8964c01cfda252100a7f566f8ac3252187c993e786ede5ff5d2db5147141d to cache now 
+[33mWARN[0m[0003] error uploading layer to cache: failed to push to destination index.docker.io/todo/cache:8a63ea816ef5402b758e67007c46529f2bb21402b663d14ecb4f9c3528d1ec36: unsupported status code 401; body:  
+2020/04/02 19:01:30 existing blob: sha256:d9176111d0efc5ddb68011b69dac0b695830915fadb15e3ab888bbdbc8adcb51
+2020/04/02 19:01:30 existing blob: sha256:4167d3e149762ea326c26fc2fd4e36fdeb7d4e639408ad30f37b8f25ac285a98
+2020/04/02 19:01:31 pushed blob: sha256:a685418a1107dd390ed7178096f073ff262d7aba57fb4bb7d2a935652a2039fe
+2020/04/02 19:01:31 pushed blob: sha256:017d154e1452d7437505eeac148a892b394e3787e70fdb897034ec2758bb9318
+2020/04/02 19:01:31 pushed blob: sha256:892f2b07642c711f9d59e38e9eff0c31a4a0ea3f0048c61d2aa47033b8a375d0
+2020/04/02 19:01:31 pushed blob: sha256:18fdcea78d97e8cc90530af71908592b0c99bc1c6c9776a81b12686c6fdf679b
+2020/04/02 19:01:31 pushed blob: sha256:f573ec9735266711c489de3208aa84020342b67da60541b4c60bfda8d4c2d3e1
+2020/04/02 19:01:31 pushed blob: sha256:79c98ac294a868f68de056161c031c38c28e61c62783ac0fe6e7612a655b45e8
+2020/04/02 19:01:31 pushed blob: sha256:11f903f311cf3b9a590242ce664b8cda4e6fba42951babf9d2eb89a4c9a23b86
+2020/04/02 19:01:32 index.docker.io/beethub/beet:0.0.6: digest: sha256:1fc9a7fecb42dd18d4825f35ed1675b63ffc8ac133fcc4773a38e84abff7d459 size: 1559
+
+Showing logs for build [32mbeethub-beet-master-release-jhckc-7[0m stage [32mfrom-build-pack[0m and container [32mstep-build-post-build[0m
+no CVE provider running in the current ** namespace so skip adding image to be analysed
+
+Showing logs for build [32mbeethub-beet-master-release-jhckc-7[0m stage [32mfrom-build-pack[0m and container [32mstep-promote-changelog[0m
+Converted /workspace/source/charts/beet to an unshallow repository
+Generating change log from git ref 25bc763955ad502cc77debd7bfb7ebbf34a3aa3e => e24cc3935f53e0bc754774dc529c64417e25a8ce
+Associating user x-0 in users.jenkins.io with email cesarac66@hotmail.com to git GitProvider user with login -0 as emails match
+Adding label jenkins.io/git-github-userid=-0 to user x-0 in users.jenkins.io
+WARNING: Failed to enrich commit 5f3b68ca8ac9e27d7a3bf3f7c4ffe20382ecbd6b with issues: User.jenkins.io "x-0" is invalid: metadata.labels: Invalid value: "-0": a valid label must be an empty string or consist of alphanumeric characters, '-', '_' or '.', and must start and end with an alphanumeric character (e.g. 'MyValue',  or 'my_value',  or '12345', regex used for validation is '(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])?')
+Associating user x-0 in users.jenkins.io with email cesarac66@hotmail.com to git GitProvider user with login -0 as emails match
+Adding label jenkins.io/git-github-userid=-0 to user x-0 in users.jenkins.io
+WARNING: Failed to enrich commit 5f3b68ca8ac9e27d7a3bf3f7c4ffe20382ecbd6b with issues: User.jenkins.io "x-0" is invalid: metadata.labels: Invalid value: "-0": a valid label must be an empty string or consist of alphanumeric characters, '-', '_' or '.', and must start and end with an alphanumeric character (e.g. 'MyValue',  or 'my_value',  or '12345', regex used for validation is '(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])?')
+Finding issues in commit messages using git format
+WARNING: No release found for beethub/beet and tag v0.0.6 so creating a new release
+Updated the release information at https://github.com/beethub/beet/releases/tag/v0.0.6
+generated: /workspace/source/charts/beet/templates/release.yaml
+Created Release beet-0-0-6 resource in namespace **
+Updating PipelineActivity beethub-beet-master-7 with version 0.0.6
+Updated PipelineActivities beethub-beet-master-7 with release notes URL: https://github.com/beethub/beet/releases/tag/v0.0.6
+
+Showing logs for build [32mbeethub-beet-master-release-jhckc-7[0m stage [32mfrom-build-pack[0m and container [32mstep-promote-helm-release[0m
+WARNING: No $CHART_REPOSITORY defined so using the default value of: http://jenkins-x-chartmuseum:8080
+Adding missing Helm repo: storage.googleapis.com https://storage.googleapis.com/chartmuseum.jenkins-x.io
+Successfully added Helm repository storage.googleapis.com.
+Adding missing Helm repo: jenkins-x-chartmuseum http://jenkins-x-chartmuseum:8080
+Successfully added Helm repository jenkins-x-chartmuseum.
+WARNING: No $CHART_REPOSITORY defined so using the default value of: http://jenkins-x-chartmuseum:8080
+Uploading chart file beet-0.0.6.tgz to http://jenkins-x-chartmuseum:8080/api/charts
+Received 201 response: {"saved":true}
+
+Showing logs for build [32mbeethub-beet-master-release-jhckc-7[0m stage [32mfrom-build-pack[0m and container [32mstep-promote-jx-promote[0m
+WARNING: prow based install so skip waiting for the merge of Pull Requests to go green as currently there is an issue with gettingstatuses from the PR, see https://github.com/jenkins-x/**/issues/2410
+WARNING: No $CHART_REPOSITORY defined so using the default value of: http://jenkins-x-chartmuseum:8080
+Promoting app beet version 0.0.6 to namespace **-staging
+WARNING: 
+Created Pull Request: https://github.com/beethub/environment-beet-k8s-1-staging/pull/15
+Added label updatebot to Pull Request https://github.com/beethub/environment-beet-k8s-1-staging/pull/15
+got git provider status pending from PR https://github.com/beethub/environment-beet-k8s-1-staging/pull/15
+got git provider status pending from PR https://github.com/beethub/environment-beet-k8s-1-staging/pull/15
+got git provider status pending from PR https://github.com/beethub/environment-beet-k8s-1-staging/pull/15
+got git provider status pending from PR https://github.com/beethub/environment-beet-k8s-1-staging/pull/15
+got git provider status pending from PR https://github.com/beethub/environment-beet-k8s-1-staging/pull/15
+Pull Request https://github.com/beethub/environment-beet-k8s-1-staging/pull/15 is merged at sha a65beb0452f250f5a143ac7f047f7a79311cf50c
+Pull Request merged but we are not waiting for the update pipeline to complete!
