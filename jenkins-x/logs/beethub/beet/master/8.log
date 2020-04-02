@@ -1,0 +1,82 @@
+
+Showing logs for build [32mmeta-beethub-beet-master-releas-95pdm-8[0m stage [32mmeta-pipeline[0m and container [32mstep-credential-initializer-fjq7c[0m
+{"level":"warn","ts":1585853943.0866442,"logger":"fallback-logger","caller":"logging/config.go:69","msg":"Fetch GitHub commit ID from kodata failed: \"ref: refs/heads/0.8.0-**-support-backwards-incompats\" is not a valid GitHub commit ID"}
+{"level":"info","ts":1585853943.0872657,"logger":"fallback-logger","caller":"creds-init/main.go:40","msg":"Credentials initialized."}
+
+Showing logs for build [32mmeta-beethub-beet-master-releas-95pdm-8[0m stage [32mmeta-pipeline[0m and container [32mstep-working-dir-initializer-k6zkt[0m
+{"level":"warn","ts":1585853944.55397,"logger":"fallback-logger","caller":"logging/config.go:69","msg":"Fetch GitHub commit ID from kodata failed: open /var/run/ko/HEAD: no such file or directory"}
+{"level":"info","ts":1585853944.5589821,"logger":"fallback-logger","caller":"bash/main.go:64","msg":"Successfully executed command \"sh -c mkdir -p /workspace/source\"; output "}
+
+Showing logs for build [32mmeta-beethub-beet-master-releas-95pdm-8[0m stage [32mmeta-pipeline[0m and container [32mstep-place-tools[0m
+
+Showing logs for build [32mmeta-beethub-beet-master-releas-95pdm-8[0m stage [32mmeta-pipeline[0m and container [32mstep-git-source-meta-beethub-beet-master-releas-95pdm-vrpgm[0m
+{"level":"warn","ts":1585853950.7358062,"logger":"fallback-logger","caller":"logging/config.go:69","msg":"Fetch GitHub commit ID from kodata failed: \"ref: refs/heads/0.8.0-**-support-backwards-incompats\" is not a valid GitHub commit ID"}
+{"level":"info","ts":1585853951.0972278,"logger":"fallback-logger","caller":"git/git.go:103","msg":"Successfully cloned https://github.com/beethub/beet.git @ 5f3b68ca8ac9e27d7a3bf3f7c4ffe20382ecbd6b in path /workspace/source"}
+
+Showing logs for build [32mmeta-beethub-beet-master-releas-95pdm-8[0m stage [32mmeta-pipeline[0m and container [32mstep-git-merge[0m
+Using SHAs from PULL_REFS=master:5f3b68ca8ac9e27d7a3bf3f7c4ffe20382ecbd6b
+WARNING: no SHAs to merge, falling back to initial cloned commit
+
+Showing logs for build [32mmeta-beethub-beet-master-releas-95pdm-8[0m stage [32mmeta-pipeline[0m and container [32mstep-merge-pull-refs[0m
+SKIP merge-pull-refs: Nothing to merge
+
+Showing logs for build [32mmeta-beethub-beet-master-releas-95pdm-8[0m stage [32mmeta-pipeline[0m and container [32mstep-create-effective-pipeline[0m
+Effective pipeline written to jenkins-x-release-effective.yml
+
+Showing logs for build [32mmeta-beethub-beet-master-releas-95pdm-8[0m stage [32mmeta-pipeline[0m and container [32mstep-create-tekton-crds[0m
+running command: echo \$(**-release-version) > VERSION
+
+running command: ** step tag --version \$(cat VERSION)
+Updating chart version in charts/beet/Chart.yaml to 0.0.6
+Updating repository in charts/beet/values.yaml to docker.io/beethub/beet
+Updating tag in charts/beet/values.yaml to 0.0.6
+error: Have you set up a git credential helper? See https://help.github.com/articles/caching-your-github-password-in-git/
+: git output: To https://github.com/beethub/beet.git
+ ! [remote rejected] v0.0.6 -> v0.0.6 (cannot lock ref 'refs/tags/v0.0.6': reference already exists)
+error: failed to push some refs to 'https://github.com/beethub/beet.git': failed to run 'git push origin v0.0.6' command in directory '', output: 'To https://github.com/beethub/beet.git
+ ! [remote rejected] v0.0.6 -> v0.0.6 (cannot lock ref 'refs/tags/v0.0.6': reference already exists)
+error: failed to push some refs to 'https://github.com/beethub/beet.git''
+error: failed to set the version on release pipelines: failed to run '/bin/sh -c ** step tag --version $(cat VERSION)' command in directory '/workspace/source', output: ''
+[31m
+Pipeline failed on stage 'meta-pipeline' : container 'step-create-tekton-crds'. The execution of the pipeline has stopped.[0m
+
+Showing logs for build [32mmeta-beethub-beet-master-releas-95pdm-8[0m stage [32mmeta-pipeline[0m and container [32mstep-credential-initializer-fjq7c[0m
+{"level":"warn","ts":1585853943.0866442,"logger":"fallback-logger","caller":"logging/config.go:69","msg":"Fetch GitHub commit ID from kodata failed: \"ref: refs/heads/0.8.0-**-support-backwards-incompats\" is not a valid GitHub commit ID"}
+{"level":"info","ts":1585853943.0872657,"logger":"fallback-logger","caller":"creds-init/main.go:40","msg":"Credentials initialized."}
+
+Showing logs for build [32mmeta-beethub-beet-master-releas-95pdm-8[0m stage [32mmeta-pipeline[0m and container [32mstep-working-dir-initializer-k6zkt[0m
+{"level":"warn","ts":1585853944.55397,"logger":"fallback-logger","caller":"logging/config.go:69","msg":"Fetch GitHub commit ID from kodata failed: open /var/run/ko/HEAD: no such file or directory"}
+{"level":"info","ts":1585853944.5589821,"logger":"fallback-logger","caller":"bash/main.go:64","msg":"Successfully executed command \"sh -c mkdir -p /workspace/source\"; output "}
+
+Showing logs for build [32mmeta-beethub-beet-master-releas-95pdm-8[0m stage [32mmeta-pipeline[0m and container [32mstep-place-tools[0m
+
+Showing logs for build [32mmeta-beethub-beet-master-releas-95pdm-8[0m stage [32mmeta-pipeline[0m and container [32mstep-git-source-meta-beethub-beet-master-releas-95pdm-vrpgm[0m
+{"level":"warn","ts":1585853950.7358062,"logger":"fallback-logger","caller":"logging/config.go:69","msg":"Fetch GitHub commit ID from kodata failed: \"ref: refs/heads/0.8.0-**-support-backwards-incompats\" is not a valid GitHub commit ID"}
+{"level":"info","ts":1585853951.0972278,"logger":"fallback-logger","caller":"git/git.go:103","msg":"Successfully cloned https://github.com/beethub/beet.git @ 5f3b68ca8ac9e27d7a3bf3f7c4ffe20382ecbd6b in path /workspace/source"}
+
+Showing logs for build [32mmeta-beethub-beet-master-releas-95pdm-8[0m stage [32mmeta-pipeline[0m and container [32mstep-git-merge[0m
+Using SHAs from PULL_REFS=master:5f3b68ca8ac9e27d7a3bf3f7c4ffe20382ecbd6b
+WARNING: no SHAs to merge, falling back to initial cloned commit
+
+Showing logs for build [32mmeta-beethub-beet-master-releas-95pdm-8[0m stage [32mmeta-pipeline[0m and container [32mstep-merge-pull-refs[0m
+SKIP merge-pull-refs: Nothing to merge
+
+Showing logs for build [32mmeta-beethub-beet-master-releas-95pdm-8[0m stage [32mmeta-pipeline[0m and container [32mstep-create-effective-pipeline[0m
+Effective pipeline written to jenkins-x-release-effective.yml
+
+Showing logs for build [32mmeta-beethub-beet-master-releas-95pdm-8[0m stage [32mmeta-pipeline[0m and container [32mstep-create-tekton-crds[0m
+running command: echo \$(**-release-version) > VERSION
+
+running command: ** step tag --version \$(cat VERSION)
+Updating chart version in charts/beet/Chart.yaml to 0.0.6
+Updating repository in charts/beet/values.yaml to docker.io/beethub/beet
+Updating tag in charts/beet/values.yaml to 0.0.6
+error: Have you set up a git credential helper? See https://help.github.com/articles/caching-your-github-password-in-git/
+: git output: To https://github.com/beethub/beet.git
+ ! [remote rejected] v0.0.6 -> v0.0.6 (cannot lock ref 'refs/tags/v0.0.6': reference already exists)
+error: failed to push some refs to 'https://github.com/beethub/beet.git': failed to run 'git push origin v0.0.6' command in directory '', output: 'To https://github.com/beethub/beet.git
+ ! [remote rejected] v0.0.6 -> v0.0.6 (cannot lock ref 'refs/tags/v0.0.6': reference already exists)
+error: failed to push some refs to 'https://github.com/beethub/beet.git''
+error: failed to set the version on release pipelines: failed to run '/bin/sh -c ** step tag --version $(cat VERSION)' command in directory '/workspace/source', output: ''
+[31m
+Pipeline failed on stage 'meta-pipeline' : container 'step-create-tekton-crds'. The execution of the pipeline has stopped.[0m
