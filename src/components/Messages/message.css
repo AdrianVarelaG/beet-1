@@ -1,0 +1,29 @@
+.message-title{
+  display: inline-block;
+  width: 70%;
+}
+
+h2.message-title__unread{
+  font-weight: bolder;
+  line-height: 1.7rem;
+}
+
+h2.message-title__read{
+  font-weight: lighter;
+}
+
+.message-date{
+  display: inline-block;
+  font-size: 14px;
+  position: absolute;
+  right: 1rem;
+}
+
+.message-date__unread{
+  font-weight: bolder;
+  color: var(--ion-color-primary, #3880ff);
+}
+
+.message-date__read{
+  color: var(--ion-color-step-400,#999);
+}
