@@ -1,10 +1,7 @@
 import React from "react";
 import { Route } from "react-router-dom";
-import { IonApp, IonRouterOutlet } from "@ionic/react";
+import { IonApp, IonRouterOutlet, IonSpinner } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
-import Menu from "./components/Navigation/Menu";
-import Settings from "./components/Navigation/Settings";
-import TabsMenu from "./components/Navigation/TabsMenu";
 
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
@@ -25,20 +22,26 @@ import "@ionic/react/css/display.css";
 /* Theme variables */
 import "./theme/variables.css";
 
-const App: React.FC = () => (
+const Menu = React.lazy(() => import("./components/Navigation/Menu"));
+const Settings = React.lazy(() => import("./components/Navigation/Settings"));
+const TabsMenu = React.lazy(() => import("./components/Navigation/TabsMenu"));
+
+const Main: React.FC = () => (
   <IonApp>
     <IonReactRouter>
-      <Menu />
-      <IonRouterOutlet id="main">
-        <Route path="/settings">
+      <React.Suspense fallback={<IonSpinner />}>
+        <Menu />
+        <IonRouterOutlet id="main">
+          <Route path="/settings">
             <Settings />
-        </Route>
-        <Route path="/">
-          <TabsMenu />
-        </Route>
-      </IonRouterOutlet>
+          </Route>
+          <Route path="/">
+            <TabsMenu />
+          </Route>
+        </IonRouterOutlet>
+      </React.Suspense>
     </IonReactRouter>
   </IonApp>
 );
 
-export default App;
+export default Main;

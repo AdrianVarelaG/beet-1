@@ -1,0 +1,12 @@
+.receipt-title{
+  display: inline-block;
+  width: 70%;
+}
+
+.receipt-date{
+  display: inline-block;
+  font-size: .8rem;
+  position: absolute;
+  right: 1rem;
+  color: var(--ion-color-step-400,#999);
+}

@@ -31,7 +31,7 @@ interface ListMenu {
 const routes : ListMenu = {
   appPages: [
     { title: "Inicio", path: "/", icon: home },
-    { title: "Facturas", path: "/receipts", icon: list },
+    { title: "Recibos", path: "/receipts", icon: list },
     { title: "Notificaciones", path: "/messages", icon: mailOpen, badge: 22 }
   ],
   loggedInPages: [

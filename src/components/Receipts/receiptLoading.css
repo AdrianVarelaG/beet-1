@@ -1,0 +1,8 @@
+.loading-receipt__business-name{
+  width: 20%;
+  visibility: inherit;
+}
+.loading-receipt__business-details{
+  width: 50%;
+  visibility: inherit;
+}

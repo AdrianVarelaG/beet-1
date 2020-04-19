@@ -13,6 +13,7 @@ import { home, list, mailOpen } from "ionicons/icons";
 import RouteMenu from "./RouteMenu";
 import Home from "../../pages/Home";
 import MessagesPage from "../../pages/Messages";
+import Receipts from "../../pages/ReceiptPage";
 
 const TabsMenu: React.FC = () => (
     <IonTabs>
@@ -23,12 +24,12 @@ const TabsMenu: React.FC = () => (
             <Home />
           </RouteMenu>
         </Route>
-        {/* <Route path="/receipts" exact>
+         <Route path="/receipts" exact>
           <RouteMenu title="Recibos">
-            <ReceiptsPage />
+            <Receipts/>
           </RouteMenu>
         </Route>
-        <Route path={`/receipts/receipt/:id`}>
+        {/* <Route path={`/receipts/receipt/:id`}>
           <RouteBackMenu title="Recibo" redirectBack="/receipts">
             <ReceiptDetail />
           </RouteBackMenu>
@@ -47,7 +48,7 @@ const TabsMenu: React.FC = () => (
         </IonTabButton>
         <IonTabButton tab="receipts" href="/receipts">
           <IonIcon icon={list} />
-          <IonLabel>Facturas</IonLabel>
+          <IonLabel>Recibos</IonLabel>
         </IonTabButton>
         <IonTabButton tab="messages" href="/messages">
           <IonIcon icon={mailOpen} />
