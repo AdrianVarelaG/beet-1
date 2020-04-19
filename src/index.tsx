@@ -30,20 +30,18 @@ const kc = Keycloak(initOptions);
 
 kc.init({ onLoad: "login-required" })
   .then(() => {
-
     const authLink = setContext(async (_, { headers }) => {
       try {
         await kc.updateToken(5);
-          return {
-            headers: {
-              ...headers,
-              authorization: `Bearer ${kc.token}`,
-            }
-          }
-      }catch(error) {
+        return {
+          headers: {
+            ...headers,
+            authorization: `Bearer ${kc.token}`,
+          },
+        };
+      } catch (error) {
         kc.logout();
-        console.log("Catch Invalid token", error, kc);
-        return ;
+        return;
       }
     });
 
@@ -68,7 +66,12 @@ kc.init({ onLoad: "login-required" })
       ]),
     });
 
-    ReactDOM.render(<ApolloProvider client={client}><App /></ApolloProvider>, document.getElementById("root"));
+    ReactDOM.render(
+      <ApolloProvider client={client}>
+        <App />
+      </ApolloProvider>,
+      document.getElementById("root")
+    );
   })
   .catch((error) => {
     console.log(error);
