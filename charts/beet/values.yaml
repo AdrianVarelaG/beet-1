@@ -9,9 +9,6 @@ image:
 
 # define environment variables here as a map of key: value
 env:
-  KEYCLOAK_URL: https://keycloak.trn.beethub.com.mx/auth/
-  KEYCLOAK_REALM: beet-staging
-  KEYCLOAK_CLIENT_ID: beet
 
 # enable this flag to use knative serve to deploy the app
 knativeDeploy: false
