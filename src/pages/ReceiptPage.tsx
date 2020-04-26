@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { IonContent } from "@ionic/react";
-import Receipts, { Receipt } from "../components/Receipts/Receipts";
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery, useMutation } from "@apollo/react-hooks";
 import gql from "graphql-tag";
+import { add } from "ionicons/icons";
+import Receipts, { Receipt } from "../components/Receipts/Receipts";
 import TextFilter from "../components/TextFilter/TextFilter";
+import AddReceiptFixedBottom from "../components/AddReceiptFixedBottom";
 
 interface ReceiptList {
   receipts: Receipt[];
@@ -19,6 +21,12 @@ const ReceiptPage: React.FC = () => {
     ReceiptList,
     ReceiptListVars
   >(GET_RECEIPTS, { variables: { filter } });
+  const [addFile, addFileInfo] = useMutation(UPLOAD_FILE);
+
+  const fileUploadHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const f = event.target.files![0];
+    addFile({variables: {file: f}})
+  }
   
   const newFilterHandler = async (f: string) => {
     try {
@@ -46,6 +54,7 @@ const ReceiptPage: React.FC = () => {
           date: r.date
         }))}
       />
+      <AddReceiptFixedBottom icon={add} onFilePicker={fileUploadHandler}/>
     </IonContent>
   );
 };
@@ -59,6 +68,14 @@ const GET_RECEIPTS = gql`
       amount
       status
       date
+    }
+  }
+`;
+
+export const UPLOAD_FILE = gql`
+  mutation uploadFile($file: Upload!) {
+    createReceipt(file: $file) {
+      success
     }
   }
 `;

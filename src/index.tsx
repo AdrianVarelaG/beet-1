@@ -13,13 +13,6 @@ import ApolloClient from "apollo-client";
 
 import * as serviceWorker from "./serviceWorker";
 
-interface AuthInfo {
-  userName: string;
-  email: string;
-  logout: () => void;
-  updateToken: (n: number) => Promise<boolean>;
-}
-
 let initOptions: Keycloak.KeycloakConfig = {
   url: (window as any)._env_?.KEYCLOAK_URL,
   realm: (window as any)._env_?.KEYCLOAK_REALM,
