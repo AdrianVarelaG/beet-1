@@ -3,23 +3,30 @@ import { IonFab, IonFabButton, IonIcon } from "@ionic/react";
 
 interface AddReceiptFixedBottomProps {
   icon: string;
-  onFilePicker : (event: React.ChangeEvent<HTMLInputElement>) => void
+  onFilePicker: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const AddReceiptFixedBottom: React.FC<AddReceiptFixedBottomProps> = ({
   icon,
-  onFilePicker
+  onFilePicker,
 }) => {
-  const inputRef = useRef<HTMLInputElement>(null); 
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const onClickHandler = () => {
     inputRef.current!.click();
-  }
+  };
 
   return (
     <IonFab vertical="bottom" horizontal="end" slot="fixed">
+      <input
+        ref={inputRef}
+        hidden
+        type="file"
+        onChange={onFilePicker}
+        accept="image/*"
+        capture
+      />
       <IonFabButton onClick={onClickHandler}>
-        <input ref={inputRef} hidden type="file" onChange={onFilePicker}/>
         <IonIcon icon={icon} />
       </IonFabButton>
     </IonFab>
