@@ -24,7 +24,7 @@ const AddReceiptFixedBottom: React.FC<AddReceiptFixedBottomProps> = ({
         type="file"
         onChange={onFilePicker}
         accept="image/*"
-        capture
+        capture="environment"
       />
       <IonFabButton onClick={onClickHandler}>
         <IonIcon icon={icon} />

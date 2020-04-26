@@ -23,9 +23,22 @@ const ReceiptPage: React.FC = () => {
   >(GET_RECEIPTS, { variables: { filter } });
   const [addFile, addFileInfo] = useMutation(UPLOAD_FILE);
 
-  const fileUploadHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+  /*const fileUploadHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+
+    console.log(event.target.validity);
+
     const f = event.target.files![0];
+    console.log(f);
+    
     addFile({variables: {file: f}})
+  }*/
+
+  const fileUploadHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if(event.target.validity.valid){
+      const file = new Blob([event.target.value], {type: event.target.files![0].type});
+      (file as any).name = event.target.files![0].name;
+      addFile({variables: {file}});
+    }
   }
   
   const newFilterHandler = async (f: string) => {
