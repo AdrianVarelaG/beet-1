@@ -14,55 +14,59 @@ import {
   warningOutline,
   trash,
 } from "ionicons/icons";
-import { Receipt as ReceiptType } from "./Receipts";
 
 import "./receipt.css";
+import gql from "graphql-tag";
+import {
+  IReceiptDataListFragment,
+  IReceiptStatus,
+} from "../../generated/graphql";
 
-const setIcon = (status: string) => {
+const setIcon = (status: IReceiptStatus) => {
   switch (status) {
-    case "IN_PROGRESS":
+    case IReceiptStatus.InProgress:
       return swapHorizontal;
-    case "DONE":
+    case IReceiptStatus.Done:
       return checkmarkDoneOutline;
-    case "GENERATING":
+    case IReceiptStatus.Generating:
       return timeOutline;
-    case "ERROR":
+    case IReceiptStatus.Error:
       return warningOutline;
   }
 };
 
-interface ReceiptProps {
-  receipt: ReceiptType;
+interface Props {
   slidingRef: React.Ref<HTMLIonItemSlidingElement>;
   onDelete: (receiptId: string) => void;
+  receipt: IReceiptDataListFragment | null;
 }
 
-const Receipt: React.FC<ReceiptProps> = ({
-  receipt: { id, status, business, createdDate, date, amount },
-  slidingRef,
-  onDelete,
-}) => {
+const Receipt = (props: Props) => {
+  const { slidingRef, onDelete, receipt } = props;
+
   let color = "medium";
-  if (status === "DONE") color = "success";
-  if (status === "ERROR") color = "danger";
+  if (receipt!.status === IReceiptStatus.Done) color = "success";
+  if (receipt!.status === IReceiptStatus.Error) color = "danger";
 
   const deleteHandler = () => {
-    onDelete(id);
-  }
+    onDelete(receipt!.id);
+  };
 
   const item = (
     <IonItem
       button
-      detail={status === "error"}
-      routerLink={`/receipts/receipt/${id}`}
+      detail={false}
+      routerLink={`/receipts/receipt/${receipt!.id}`}
     >
-      <IonIcon icon={setIcon(status)} slot="start" color={color}  />
+      <IonIcon icon={setIcon(receipt!.status)} slot="start" color={color} />
       <IonLabel>
-        <h3 className="receipt-title">{business || "Identificando"}</h3>
-        <span className="receipt-date">{createdDate}</span>
+        <h3 className="receipt-title">
+          {receipt!.business || "Identificando"}
+        </h3>
+        <span className="receipt-date">{receipt!.createdDate}</span>
         <p>
-          {date || "Identificando"} &nbsp;&mdash;&nbsp;
-          {amount}
+          {receipt!.date || "Identificando"} &nbsp;&mdash;&nbsp;
+          {receipt!.amount}
         </p>
       </IonLabel>
     </IonItem>
@@ -71,16 +75,30 @@ const Receipt: React.FC<ReceiptProps> = ({
   return (
     <IonItemSliding ref={slidingRef}>
       <IonItemOptions side="start">
-        <IonItemOption onClick={deleteHandler} color={status==="GENERATING" ? "medium" :"danger"} disabled={status==="GENERATING"}>
+        <IonItemOption
+          onClick={deleteHandler}
+          color={
+            receipt!.status === IReceiptStatus.Generating ? "medium" : "danger"
+          }
+          disabled={receipt!.status === IReceiptStatus.Generating}
+        >
           <IonIcon slot="icon-only" icon={trash} />
         </IonItemOption>
       </IonItemOptions>
       {item}
-      <IonItemOptions side="end">
-        <IonItemOption onClick={() => {}}>Reintentar</IonItemOption>
-      </IonItemOptions>
     </IonItemSliding>
   );
 };
+
+Receipt.fragment = gql`
+  fragment ReceiptDataList on Receipt {
+    id
+    business
+    createdDate
+    amount
+    status
+    date
+  }
+`;
 
 export default Receipt;

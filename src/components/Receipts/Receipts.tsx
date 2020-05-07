@@ -1,26 +1,28 @@
 import React, { Fragment, useState, useRef } from "react";
-import { IonAlert, IonList, IonCard, IonCardContent } from "@ionic/react";
+import {
+  IonAlert,
+  IonList,
+  IonCard,
+  IonCardContent,
+  IonCardHeader,
+  IonCardTitle,
+} from "@ionic/react";
 import ReceiptLoading from "./ReceiptLoading";
 import ReceiptComponent from "./Receipt";
+import gql from "graphql-tag";
+import { IReceiptsListFragment } from "../../generated/graphql";
 
-export interface Receipt {
-  id: string;
-  business: string;
-  createdDate: string;
-  amount: string;
-  status: string;
-  date: string;
-}
 
-interface ReceiptsProps {
+interface Props {
   loading: boolean;
   error: boolean;
-  receipts: Receipt[] | undefined;
+  receipts: IReceiptsListFragment | undefined;
 }
 
-const Receipts: React.FC<ReceiptsProps> = ({ loading, error, receipts }) => {
+const Receipts = (props: Props) => {
   const [startDeleting, setStartDeleting] = useState(false);
   const slidingOptionsRef = useRef<HTMLIonItemSlidingElement>(null);
+  const {loading, error, receipts} = props;
 
   const startDeleteHandler = (receiptId: string) => {
     console.log(receiptId);
@@ -55,9 +57,9 @@ const Receipts: React.FC<ReceiptsProps> = ({ loading, error, receipts }) => {
       </Fragment>
     );
 
-  const items = receipts?.map((r) => (
+  const items = receipts?.receipts?.map((r) => (
     <ReceiptComponent
-      key={r.id}
+      key={r?.id}
       receipt={r}
       slidingRef={slidingOptionsRef}
       onDelete={startDeleteHandler}
@@ -86,12 +88,29 @@ const Receipts: React.FC<ReceiptsProps> = ({ loading, error, receipts }) => {
         ]}
       />
       <IonCard className="ion-no-margin ion-margin-start ion-margin-end">
-        <IonCardContent className="ion-no-padding">
-          <IonList>{items}</IonList>
-        </IonCardContent>
+        {items && items.length > 0 && <IonList>{items}</IonList>}
+        {(!items || items.length === 0) && (
+          <IonCardHeader>
+            <IonCardTitle className="ion-text-center">
+              No se encontraron recibos
+            </IonCardTitle>
+          </IonCardHeader>
+        )}
       </IonCard>
     </Fragment>
   );
 };
+
+Receipts.fragment = gql`
+  fragment ReceiptsList on Query {
+    receipts (filter: $filter) {
+      ...ReceiptDataList
+      ticket {
+        url
+      } 
+    }
+  }
+  ${ReceiptComponent.fragment}
+`
 
 export default Receipts;

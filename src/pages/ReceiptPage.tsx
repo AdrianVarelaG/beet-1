@@ -1,46 +1,30 @@
-import React, { useState } from "react";
+import React, { useState, Fragment } from "react";
 import { IonContent } from "@ionic/react";
-import { useQuery, useMutation } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 import { add } from "ionicons/icons";
-import Receipts, { Receipt } from "../components/Receipts/Receipts";
+import Receipts from "../components/Receipts/Receipts";
 import TextFilter from "../components/TextFilter/TextFilter";
 import AddReceiptFixedBottom from "../components/AddReceiptFixedBottom";
+import { useReceiptListQuery } from "../generated/graphql";
+import { DocumentNode } from "graphql";
 
-interface ReceiptList {
-  receipts: Receipt[];
-}
-
-interface ReceiptListVars {
-  filter: string;
-}
-
-const ReceiptPage: React.FC = () => {
+const ReceiptPage: React.FC & { fragment: DocumentNode } = () => {
   const [filter, setFilter] = useState("");
-  const { loading, error, data, refetch } = useQuery<
-    ReceiptList,
-    ReceiptListVars
-  >(GET_RECEIPTS, { variables: { filter } });
-  const [addFile, addFileInfo] = useMutation(UPLOAD_FILE);
+  const { loading, error, data, refetch } = useReceiptListQuery({
+    variables: { filter },
+  });
 
+  //const [addFile, addFileInfo] = useMutation(UPLOAD_FILE);
+/*
   const fileUploadHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-
-    console.log(event.target.validity);
-
     const f = event.target.files![0];
-    console.log(f);
+    addFile({ variables: { file: f } });
+  };
+*/
+  const addReceipt = async () => {
     
-    addFile({variables: {file: f}})
-  }
+  } 
 
-  //Add for show the ticket in the screen.
-  /*const fileUploadHandler = (file: Blob, name: string) => {
-
-    (file as any).name = name;
-    addFile({variables: {file}});
-    
-  }*/
-  
   const newFilterHandler = async (f: string) => {
     try {
       setFilter(f);
@@ -49,48 +33,31 @@ const ReceiptPage: React.FC = () => {
       console.log(error);
     }
   };
-
-  console.log(loading, data, error);
-
+  
   return (
-    <IonContent>
+    <Fragment>
       <TextFilter isError={!!error} onChange={newFilterHandler} />
-      <Receipts
-        loading={loading}
-        error={!!error}
-        receipts={data?.receipts.map((r) => ({
-          id: r.id,
-          amount: r.amount,
-          business: r.business,
-          createdDate: r.createdDate,
-          status: r.status,
-          date: r.date
-        }))}
-      />
-      <AddReceiptFixedBottom icon={add} onFilePicker={fileUploadHandler}/>
-    </IonContent>
+      <IonContent>
+        <Receipts loading={loading} error={!!error} receipts={data} />
+        <AddReceiptFixedBottom icon={add} onFilePicker={addReceipt} />
+      </IonContent>
+    </Fragment>
   );
 };
 
-const GET_RECEIPTS = gql`
+ReceiptPage.fragment = gql`
   query ReceiptList($filter: String) {
-    receipts(filter: $filter) {
-      id
-      business
-      createdDate
-      amount
-      status
-      date
-    }
+    ...ReceiptsList
   }
-`;
-
-export const UPLOAD_FILE = gql`
-  mutation uploadFile($file: Upload!) {
-    createReceipt(file: $file) {
-      success
-    }
-  }
+  ${Receipts.fragment}
 `;
 
 export default ReceiptPage;
+
+//Add for show the ticket in the screen.
+/*const fileUploadHandler = (file: Blob, name: string) => {
+
+    (file as any).name = name;
+    addFile({variables: {file}});
+    
+  }*/
