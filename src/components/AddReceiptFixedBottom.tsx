@@ -1,5 +1,5 @@
-import React, { useRef, Fragment } from "react";
-import { IonFab, IonFabButton, IonIcon } from "@ionic/react";
+import React, { useRef, Fragment, useEffect, useState } from "react";
+import { IonFab, IonFabButton, IonIcon, IonToast } from "@ionic/react";
 import gql from "graphql-tag";
 import Receipt from "./Receipts/Receipt";
 import { useUploadFileMutation } from "../generated/graphql";
@@ -32,8 +32,18 @@ interface Props {
 const AddReceiptFixedBottom = (props: Props) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [addFile, addFileResponse] = useUploadFileMutation();
+  const [message, setMessage] = useState("");
   const { icon, onFilePicker } = props;
   const { loading, error, data } = addFileResponse;
+
+  console.log("rendering");
+  console.log(addFileResponse);
+
+  useEffect(() => {
+    if (data) {
+      setMessage("Recibo agregado de manera correcta");
+    }
+  }, [data]);
 
   const onClickHandler = () => {
     inputRef.current!.click();
@@ -41,29 +51,17 @@ const AddReceiptFixedBottom = (props: Props) => {
 
   const pickFileHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     console.log(event.target.files);
-
     if (event.target.files && event.target.files.length > 0) {
       const f = event.target.files![0];
       addFile({ variables: { file: f } });
       //onFilePicker(event);
       inputRef.current!.value = "";
     }
-    /*  const file = event.target!.files![0];
-    const fr = new FileReader();
-    const name = file.name;
-    
-    fr.onload = () => {
-      const data = fr.result!.toString();
-      console.log(data);
-      const b = dataURItoBlob(data);
-      onFilePicker(b, name);
-    };
-    fr.readAsDataURL(file);*/
   };
 
   return (
     <Fragment>
-      {loading && <Spinner/>}
+      {loading && <Spinner />}
       <IonFab vertical="bottom" horizontal="end" slot="fixed">
         <input
           ref={inputRef}
@@ -77,6 +75,13 @@ const AddReceiptFixedBottom = (props: Props) => {
           <IonIcon icon={icon} />
         </IonFabButton>
       </IonFab>
+      <IonToast
+        color="dark"
+        isOpen={!!message}
+        message={message}
+        duration={3000}
+        onDidDismiss={() => setMessage("")}
+      />
     </Fragment>
   );
 };
@@ -93,8 +98,16 @@ AddReceiptFixedBottom.fragment = gql`
   ${Receipt.fragment}
 `;
 
-/*
+/*  const file = event.target!.files![0];
+    const fr = new FileReader();
+    const name = file.name;
+    
+    fr.onload = () => {
+      const data = fr.result!.toString();
+      console.log(data);
+      const b = dataURItoBlob(data);
+      onFilePicker(b, name);
+    };
+    fr.readAsDataURL(file);*/
 
-*/
-
-export default AddReceiptFixedBottom;
+export default React.memo(AddReceiptFixedBottom);

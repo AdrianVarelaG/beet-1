@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from "react";
+import React, { useState, Fragment, useCallback } from "react";
 import { IonContent } from "@ionic/react";
 import gql from "graphql-tag";
 import { add } from "ionicons/icons";
@@ -21,9 +21,9 @@ const ReceiptPage: React.FC & { fragment: DocumentNode } = () => {
     addFile({ variables: { file: f } });
   };
 */
-  const addReceipt = async () => {
+  const addReceipt = useCallback( async () => {
     
-  } 
+  }, [] );
 
   const newFilterHandler = async (f: string) => {
     try {

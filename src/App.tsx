@@ -21,12 +21,14 @@ import "@ionic/react/css/display.css";
 
 /* Theme variables */
 import "./theme/variables.css";
+import RouteMenu from "./components/Navigation/RouteMenu";
+import Logout from "./components/logout";
 
 const Menu = React.lazy(() => import("./components/Navigation/Menu"));
 const Settings = React.lazy(() => import("./components/Navigation/Settings"));
 const TabsMenu = React.lazy(() => import("./components/Navigation/TabsMenu"));
 
-const Main: React.FC = () => (
+const App: React.FC = () => (
   <IonApp>
     <IonReactRouter>
       <React.Suspense fallback={<IonSpinner />}>
@@ -34,6 +36,9 @@ const Main: React.FC = () => (
         <IonRouterOutlet id="main">
           <Route path="/settings">
             <Settings />
+          </Route>
+          <Route path="/logout">
+            <Logout />
           </Route>
           <Route path="/">
             <TabsMenu />
@@ -44,4 +49,4 @@ const Main: React.FC = () => (
   </IonApp>
 );
 
-export default Main;
+export default App;

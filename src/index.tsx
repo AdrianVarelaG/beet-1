@@ -12,6 +12,7 @@ import { setContext } from "apollo-link-context";
 import ApolloClient from "apollo-client";
 
 import * as serviceWorker from "./serviceWorker";
+import AuthContextProvider from "./context/auth-context";
 
 let initOptions: Keycloak.KeycloakConfig = {
   url: (window as any)._env_?.KEYCLOAK_URL,
@@ -41,6 +42,7 @@ kc.init({ onLoad: "login-required" })
     const link = createUploadLink({
       uri: (window as any)._env_?.BACKEND_URL,
     });
+    console.log(kc);
     const cache = new InMemoryCache();
     const client = new ApolloClient({
       cache,
@@ -61,7 +63,9 @@ kc.init({ onLoad: "login-required" })
 
     ReactDOM.render(
       <ApolloProvider client={client}>
-        <App />
+        <AuthContextProvider keycloak={kc}>
+          <App />
+        </AuthContextProvider>
       </ApolloProvider>,
       document.getElementById("root")
     );

@@ -7,7 +7,6 @@ export const useQuery = <TData, TVariables>(
   options?: Apollo.QueryHookOptions<TData, TVariables>
 ) => {
   const result = Apollo.useQuery<TData, TVariables>(query, options);
-  console.log(result);
   
   if(result.error){
     throw result.error;
