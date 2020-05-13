@@ -3,26 +3,22 @@ import {
   IonAlert,
   IonList,
   IonCard,
-  IonCardContent,
   IonCardHeader,
   IonCardTitle,
 } from "@ionic/react";
-import ReceiptLoading from "./ReceiptLoading";
 import ReceiptComponent from "./Receipt";
 import gql from "graphql-tag";
 import { IReceiptsListFragment } from "../../generated/graphql";
 
 
 interface Props {
-  loading: boolean;
-  error: boolean;
   receipts: IReceiptsListFragment | undefined;
 }
 
 const Receipts = (props: Props) => {
   const [startDeleting, setStartDeleting] = useState(false);
   const slidingOptionsRef = useRef<HTMLIonItemSlidingElement>(null);
-  const {loading, error, receipts} = props;
+  const {receipts} = props;
 
   const startDeleteHandler = (receiptId: string) => {
     console.log(receiptId);
@@ -32,30 +28,6 @@ const Receipts = (props: Props) => {
     setStartDeleting(false);
     console.log("deleting");
   };
-
-  if (loading) {
-    return (
-      <IonCard className="ion-no-margin ion-margin-start ion-margin-end">
-        <IonCardContent className="ion-no-padding">
-          <ReceiptLoading />
-        </IonCardContent>
-      </IonCard>
-    );
-  }
-
-  if (error)
-    return (
-      <Fragment>
-        <ReceiptLoading />
-        <IonAlert
-          isOpen={error}
-          header={"Error"}
-          subHeader={"Ups a ocurrido un error"}
-          message={"No fue posible actualizar tu lista de recibos."}
-          buttons={["OK"]}
-        />
-      </Fragment>
-    );
 
   const items = receipts?.receipts?.map((r) => (
     <ReceiptComponent

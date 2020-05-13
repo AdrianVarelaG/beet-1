@@ -1,4 +1,4 @@
-import React, { Fragment, useContext, useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { Redirect } from "react-router-dom";
 import { IonContent, IonPage } from "@ionic/react";
 import { AuthContext } from "../context/auth-context";
@@ -10,7 +10,7 @@ const Logout: React.FC<LogoutProps> = () => {
   const authContext = useContext(AuthContext);
   useEffect(() =>{
     authContext.logout!();
-  }, [])
+  }, [authContext.logout])
 
   return (
     <IonPage>
