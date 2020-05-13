@@ -1,82 +1,316 @@
 
-Showing logs for build [32mmeta-beethub-beet-master-releas-95pdm-8[0m stage [32mmeta-pipeline[0m and container [32mstep-credential-initializer-fjq7c[0m
-{"level":"warn","ts":1585853943.0866442,"logger":"fallback-logger","caller":"logging/config.go:69","msg":"Fetch GitHub commit ID from kodata failed: \"ref: refs/heads/0.8.0-**-support-backwards-incompats\" is not a valid GitHub commit ID"}
-{"level":"info","ts":1585853943.0872657,"logger":"fallback-logger","caller":"creds-init/main.go:40","msg":"Credentials initialized."}
+Showing logs for build [32mbeethub-beet-master-release-6s8dk-8[0m stage [32mfrom-build-pack[0m and container [32mstep-credential-initializer-wv2k6[0m
+{"level":"warn","ts":1589391246.887028,"logger":"fallback-logger","caller":"logging/config.go:69","msg":"Fetch GitHub commit ID from kodata failed: \"ref: refs/heads/0.8.0-**-support-backwards-incompats\" is not a valid GitHub commit ID"}
+{"level":"info","ts":1589391246.8880324,"logger":"fallback-logger","caller":"creds-init/main.go:40","msg":"Credentials initialized."}
 
-Showing logs for build [32mmeta-beethub-beet-master-releas-95pdm-8[0m stage [32mmeta-pipeline[0m and container [32mstep-working-dir-initializer-k6zkt[0m
-{"level":"warn","ts":1585853944.55397,"logger":"fallback-logger","caller":"logging/config.go:69","msg":"Fetch GitHub commit ID from kodata failed: open /var/run/ko/HEAD: no such file or directory"}
-{"level":"info","ts":1585853944.5589821,"logger":"fallback-logger","caller":"bash/main.go:64","msg":"Successfully executed command \"sh -c mkdir -p /workspace/source\"; output "}
+Showing logs for build [32mbeethub-beet-master-release-6s8dk-8[0m stage [32mfrom-build-pack[0m and container [32mstep-working-dir-initializer-l7hpk[0m
+{"level":"warn","ts":1589391248.0093942,"logger":"fallback-logger","caller":"logging/config.go:69","msg":"Fetch GitHub commit ID from kodata failed: open /var/run/ko/HEAD: no such file or directory"}
+{"level":"info","ts":1589391248.0179946,"logger":"fallback-logger","caller":"bash/main.go:64","msg":"Successfully executed command \"sh -c mkdir -p /workspace/source\"; output "}
 
-Showing logs for build [32mmeta-beethub-beet-master-releas-95pdm-8[0m stage [32mmeta-pipeline[0m and container [32mstep-place-tools[0m
+Showing logs for build [32mbeethub-beet-master-release-6s8dk-8[0m stage [32mfrom-build-pack[0m and container [32mstep-place-tools[0m
 
-Showing logs for build [32mmeta-beethub-beet-master-releas-95pdm-8[0m stage [32mmeta-pipeline[0m and container [32mstep-git-source-meta-beethub-beet-master-releas-95pdm-vrpgm[0m
-{"level":"warn","ts":1585853950.7358062,"logger":"fallback-logger","caller":"logging/config.go:69","msg":"Fetch GitHub commit ID from kodata failed: \"ref: refs/heads/0.8.0-**-support-backwards-incompats\" is not a valid GitHub commit ID"}
-{"level":"info","ts":1585853951.0972278,"logger":"fallback-logger","caller":"git/git.go:103","msg":"Successfully cloned https://github.com/beethub/beet.git @ 5f3b68ca8ac9e27d7a3bf3f7c4ffe20382ecbd6b in path /workspace/source"}
+Showing logs for build [32mbeethub-beet-master-release-6s8dk-8[0m stage [32mfrom-build-pack[0m and container [32mstep-git-source-beethub-beet-master-release-6s8dk-l6fhm[0m
+{"level":"warn","ts":1589391255.1095288,"logger":"fallback-logger","caller":"logging/config.go:69","msg":"Fetch GitHub commit ID from kodata failed: \"ref: refs/heads/0.8.0-**-support-backwards-incompats\" is not a valid GitHub commit ID"}
+{"level":"info","ts":1589391255.4985943,"logger":"fallback-logger","caller":"git/git.go:103","msg":"Successfully cloned https://github.com/beethub/beet.git @ v0.0.17 in path /workspace/source"}
 
-Showing logs for build [32mmeta-beethub-beet-master-releas-95pdm-8[0m stage [32mmeta-pipeline[0m and container [32mstep-git-merge[0m
-Using SHAs from PULL_REFS=master:5f3b68ca8ac9e27d7a3bf3f7c4ffe20382ecbd6b
+Showing logs for build [32mbeethub-beet-master-release-6s8dk-8[0m stage [32mfrom-build-pack[0m and container [32mstep-git-merge[0m
+Using SHAs from PULL_REFS=master:2fac260450edc26f3bbf7bab485d423c082c05cc
 WARNING: no SHAs to merge, falling back to initial cloned commit
 
-Showing logs for build [32mmeta-beethub-beet-master-releas-95pdm-8[0m stage [32mmeta-pipeline[0m and container [32mstep-merge-pull-refs[0m
-SKIP merge-pull-refs: Nothing to merge
+Showing logs for build [32mbeethub-beet-master-release-6s8dk-8[0m stage [32mfrom-build-pack[0m and container [32mstep-setup-jx-git-credentials[0m
+Generated Git credentials file /workspace/xdg_config/git/credentials
 
-Showing logs for build [32mmeta-beethub-beet-master-releas-95pdm-8[0m stage [32mmeta-pipeline[0m and container [32mstep-create-effective-pipeline[0m
-Effective pipeline written to jenkins-x-release-effective.yml
+Showing logs for build [32mbeethub-beet-master-release-6s8dk-8[0m stage [32mfrom-build-pack[0m and container [32mstep-build-npmrc[0m
+Command "credential" is deprecated, it will be removed on Jun 1 2020.  This is replaced by Tekton's mounted secrets
+WARNING: failed to find Secret npm-token in namespace **
 
-Showing logs for build [32mmeta-beethub-beet-master-releas-95pdm-8[0m stage [32mmeta-pipeline[0m and container [32mstep-create-tekton-crds[0m
-running command: echo \$(**-release-version) > VERSION
+Showing logs for build [32mbeethub-beet-master-release-6s8dk-8[0m stage [32mfrom-build-pack[0m and container [32mstep-build-npm-install[0m
 
-running command: ** step tag --version \$(cat VERSION)
-Updating chart version in charts/beet/Chart.yaml to 0.0.6
-Updating repository in charts/beet/values.yaml to docker.io/beethub/beet
-Updating tag in charts/beet/values.yaml to 0.0.6
-error: Have you set up a git credential helper? See https://help.github.com/articles/caching-your-github-password-in-git/
-: git output: To https://github.com/beethub/beet.git
- ! [remote rejected] v0.0.6 -> v0.0.6 (cannot lock ref 'refs/tags/v0.0.6': reference already exists)
-error: failed to push some refs to 'https://github.com/beethub/beet.git': failed to run 'git push origin v0.0.6' command in directory '', output: 'To https://github.com/beethub/beet.git
- ! [remote rejected] v0.0.6 -> v0.0.6 (cannot lock ref 'refs/tags/v0.0.6': reference already exists)
-error: failed to push some refs to 'https://github.com/beethub/beet.git''
-error: failed to set the version on release pipelines: failed to run '/bin/sh -c ** step tag --version $(cat VERSION)' command in directory '/workspace/source', output: ''
-[31m
-Pipeline failed on stage 'meta-pipeline' : container 'step-create-tekton-crds'. The execution of the pipeline has stopped.[0m
+> core-js@2.6.11 postinstall /workspace/source/node_modules/babel-runtime/node_modules/core-js
+> node -e "try{require('./postinstall')}catch(e){}"
 
-Showing logs for build [32mmeta-beethub-beet-master-releas-95pdm-8[0m stage [32mmeta-pipeline[0m and container [32mstep-credential-initializer-fjq7c[0m
-{"level":"warn","ts":1585853943.0866442,"logger":"fallback-logger","caller":"logging/config.go:69","msg":"Fetch GitHub commit ID from kodata failed: \"ref: refs/heads/0.8.0-**-support-backwards-incompats\" is not a valid GitHub commit ID"}
-{"level":"info","ts":1585853943.0872657,"logger":"fallback-logger","caller":"creds-init/main.go:40","msg":"Credentials initialized."}
 
-Showing logs for build [32mmeta-beethub-beet-master-releas-95pdm-8[0m stage [32mmeta-pipeline[0m and container [32mstep-working-dir-initializer-k6zkt[0m
-{"level":"warn","ts":1585853944.55397,"logger":"fallback-logger","caller":"logging/config.go:69","msg":"Fetch GitHub commit ID from kodata failed: open /var/run/ko/HEAD: no such file or directory"}
-{"level":"info","ts":1585853944.5589821,"logger":"fallback-logger","caller":"bash/main.go:64","msg":"Successfully executed command \"sh -c mkdir -p /workspace/source\"; output "}
+> core-js@3.6.4 postinstall /workspace/source/node_modules/core-js
+> node -e "try{require('./postinstall')}catch(e){}"
 
-Showing logs for build [32mmeta-beethub-beet-master-releas-95pdm-8[0m stage [32mmeta-pipeline[0m and container [32mstep-place-tools[0m
 
-Showing logs for build [32mmeta-beethub-beet-master-releas-95pdm-8[0m stage [32mmeta-pipeline[0m and container [32mstep-git-source-meta-beethub-beet-master-releas-95pdm-vrpgm[0m
-{"level":"warn","ts":1585853950.7358062,"logger":"fallback-logger","caller":"logging/config.go:69","msg":"Fetch GitHub commit ID from kodata failed: \"ref: refs/heads/0.8.0-**-support-backwards-incompats\" is not a valid GitHub commit ID"}
-{"level":"info","ts":1585853951.0972278,"logger":"fallback-logger","caller":"git/git.go:103","msg":"Successfully cloned https://github.com/beethub/beet.git @ 5f3b68ca8ac9e27d7a3bf3f7c4ffe20382ecbd6b in path /workspace/source"}
+> core-js-pure@3.6.4 postinstall /workspace/source/node_modules/core-js-pure
+> node -e "try{require('./postinstall')}catch(e){}"
 
-Showing logs for build [32mmeta-beethub-beet-master-releas-95pdm-8[0m stage [32mmeta-pipeline[0m and container [32mstep-git-merge[0m
-Using SHAs from PULL_REFS=master:5f3b68ca8ac9e27d7a3bf3f7c4ffe20382ecbd6b
-WARNING: no SHAs to merge, falling back to initial cloned commit
 
-Showing logs for build [32mmeta-beethub-beet-master-releas-95pdm-8[0m stage [32mmeta-pipeline[0m and container [32mstep-merge-pull-refs[0m
-SKIP merge-pull-refs: Nothing to merge
+> core-js@2.6.11 postinstall /workspace/source/node_modules/fbjs/node_modules/core-js
+> node -e "try{require('./postinstall')}catch(e){}"
 
-Showing logs for build [32mmeta-beethub-beet-master-releas-95pdm-8[0m stage [32mmeta-pipeline[0m and container [32mstep-create-effective-pipeline[0m
-Effective pipeline written to jenkins-x-release-effective.yml
+npm WARN The package @graphql-codegen/cli is included as both a dev and production dependency.
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@1.2.12 (node_modules/webpack-dev-server/node_modules/fsevents):
+npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@1.2.12: wanted {"os":"darwin","arch":"any"} (current: {"os":"linux","arch":"x64"})
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@1.2.12 (node_modules/watchpack/node_modules/fsevents):
+npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@1.2.12: wanted {"os":"darwin","arch":"any"} (current: {"os":"linux","arch":"x64"})
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@1.2.12 (node_modules/jest-haste-map/node_modules/fsevents):
+npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@1.2.12: wanted {"os":"darwin","arch":"any"} (current: {"os":"linux","arch":"x64"})
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@2.1.2 (node_modules/fsevents):
+npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@2.1.2: wanted {"os":"darwin","arch":"any"} (current: {"os":"linux","arch":"x64"})
 
-Showing logs for build [32mmeta-beethub-beet-master-releas-95pdm-8[0m stage [32mmeta-pipeline[0m and container [32mstep-create-tekton-crds[0m
-running command: echo \$(**-release-version) > VERSION
+added 1912 packages from 962 contributors and audited 2119 packages in 43.231s
+found 1 low severity vulnerability
+  run `npm audit fix` to fix them, or `npm audit` for details
 
-running command: ** step tag --version \$(cat VERSION)
-Updating chart version in charts/beet/Chart.yaml to 0.0.6
-Updating repository in charts/beet/values.yaml to docker.io/beethub/beet
-Updating tag in charts/beet/values.yaml to 0.0.6
-error: Have you set up a git credential helper? See https://help.github.com/articles/caching-your-github-password-in-git/
-: git output: To https://github.com/beethub/beet.git
- ! [remote rejected] v0.0.6 -> v0.0.6 (cannot lock ref 'refs/tags/v0.0.6': reference already exists)
-error: failed to push some refs to 'https://github.com/beethub/beet.git': failed to run 'git push origin v0.0.6' command in directory '', output: 'To https://github.com/beethub/beet.git
- ! [remote rejected] v0.0.6 -> v0.0.6 (cannot lock ref 'refs/tags/v0.0.6': reference already exists)
-error: failed to push some refs to 'https://github.com/beethub/beet.git''
-error: failed to set the version on release pipelines: failed to run '/bin/sh -c ** step tag --version $(cat VERSION)' command in directory '/workspace/source', output: ''
-[31m
-Pipeline failed on stage 'meta-pipeline' : container 'step-create-tekton-crds'. The execution of the pipeline has stopped.[0m
+Showing logs for build [32mbeethub-beet-master-release-6s8dk-8[0m stage [32mfrom-build-pack[0m and container [32mstep-build-npm-test[0m
+
+> beet@0.0.1 test /workspace/source
+> react-scripts test
+
+  console.warn node_modules/graphql-tag/lib/graphql-tag.umd.js:54
+    Warning: fragment with name ReceiptsList already exists.
+    graphql-tag enforces all fragment names across your application to be unique; read more about
+    this in the docs: http://dev.apollodata.com/core/fragments.html#unique-names
+
+PASS src/App.test.tsx
+  ✓ renders without crashing (1085ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       1 passed, 1 total
+Snapshots:   0 total
+Time:        4.919s
+Ran all test suites.
+
+Showing logs for build [32mbeethub-beet-master-release-6s8dk-8[0m stage [32mfrom-build-pack[0m and container [32mstep-build-ui-build[0m
+
+> beet@0.0.1 build /workspace/source
+> react-scripts build
+
+Creating an optimized production build...
+Compiled with warnings.
+
+./src/pages/ReceiptPage.tsx
+  Line 37:12:  'errorMutation' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  Line 38:11:  'dataMutation' is assigned a value but never used   @typescript-eslint/no-unused-vars
+
+Search for the keywords to learn more about each warning.
+To ignore, add // eslint-disable-next-line to the line before.
+
+File sizes after gzip:
+
+  130.09 KB  build/static/js/51.5ab97a94.chunk.js
+  24.98 KB   build/static/js/93.77911035.chunk.js
+  24.11 KB   build/static/js/4.dd414bc3.chunk.js
+  11.79 KB   build/static/js/53.f318bd4e.chunk.js
+  10.71 KB   build/static/js/59.ee90da08.chunk.js
+  10.71 KB   build/static/js/60.d39c0223.chunk.js
+  10.2 KB    build/static/js/55.6877b792.chunk.js
+  10.19 KB   build/static/js/56.c1677022.chunk.js
+  7.46 KB    build/static/js/76.307cb461.chunk.js
+  7.46 KB    build/static/js/77.684f2fb2.chunk.js
+  6.36 KB    build/static/js/63.588f6c05.chunk.js
+  6.36 KB    build/static/js/64.30e995dd.chunk.js
+  6.28 KB    build/static/js/61.59297a78.chunk.js
+  6.28 KB    build/static/js/62.5d42b6ac.chunk.js
+  6.03 KB    build/static/js/54.b8c4fb53.chunk.js
+  5.73 KB    build/static/js/90.fcb5837c.chunk.js
+  5.73 KB    build/static/js/91.ee107436.chunk.js
+  5.37 KB    build/static/js/78.1baf1f08.chunk.js
+  5.37 KB    build/static/js/79.9da8be99.chunk.js
+  5.37 KB    build/static/js/85.9e883077.chunk.js
+  5.37 KB    build/static/js/86.008f243e.chunk.js
+  4.96 KB    build/static/js/73.2d917955.chunk.js
+  4.96 KB    build/static/js/72.e9365772.chunk.js
+  4.7 KB     build/static/js/82.e166e08b.chunk.js
+  4.69 KB    build/static/js/69.74b5b87a.chunk.js
+  4.54 KB    build/static/js/81.b50802c8.chunk.js
+  4.54 KB    build/static/js/80.5bf9c1eb.chunk.js
+  4.52 KB    build/static/js/83.56f93fbf.chunk.js
+  4.52 KB    build/static/js/84.60384db3.chunk.js
+  4.36 KB    build/static/js/74.336c3f18.chunk.js
+  4.36 KB    build/static/js/75.b917b643.chunk.js
+  4.28 KB    build/static/js/57.db640741.chunk.js
+  4.28 KB    build/static/js/58.c6105547.chunk.js
+  4.08 KB    build/static/js/66.a18e3cf3.chunk.js
+  4.08 KB    build/static/js/65.5dc59c8a.chunk.js
+  4.07 KB    build/static/js/stencil-ion-fab_3-md-entry-js.5a958aa9.chunk.js
+  4.07 KB    build/static/js/stencil-ion-fab_3-ios-entry-js.62b8ee5f.chunk.js
+  4.03 KB    build/static/js/70.abf7b527.chunk.js
+  4.03 KB    build/static/js/71.17e9e15a.chunk.js
+  3.98 KB    build/static/js/87.5be480d2.chunk.js
+  3.98 KB    build/static/js/88.2812cb7d.chunk.js
+  3.72 KB    build/static/js/stencil-ion-tab-bar_2-md-entry-js.33645706.chunk.js
+  3.72 KB    build/static/js/stencil-ion-tab-bar_2-ios-entry-js.23d1ece7.chunk.js
+  3.67 KB    build/static/css/51.f6437998.chunk.css
+  3.58 KB    build/static/js/68.1612195a.chunk.js
+  3.55 KB    build/static/js/stencil-ion-popover-ios-entry-js.f5bff5b2.chunk.js
+  3.55 KB    build/static/js/stencil-ion-popover-md-entry-js.485e14bb.chunk.js
+  3.41 KB    build/static/js/stencil-ion-input-md-entry-js.5d138424.chunk.js
+  3.41 KB    build/static/js/stencil-ion-input-ios-entry-js.f4775627.chunk.js
+  3.37 KB    build/static/js/52.cd03e615.chunk.js
+  3.21 KB    build/static/js/stencil-ion-virtual-scroll-entry-js.0ff73c92.chunk.js
+  3.09 KB    build/static/js/stencil-ion-toggle-md-entry-js.9984d2c4.chunk.js
+  3.09 KB    build/static/js/stencil-ion-toggle-ios-entry-js.8000c5da.chunk.js
+  2.96 KB    build/static/js/stencil-ion-loading-md-entry-js.c78a6740.chunk.js
+  2.96 KB    build/static/js/stencil-ion-loading-ios-entry-js.dff20f4a.chunk.js
+  2.84 KB    build/static/js/runtime-main.e64c6801.js
+  2.82 KB    build/static/js/stencil-ion-back-button-ios-entry-js.4773f69a.chunk.js
+  2.82 KB    build/static/js/stencil-ion-back-button-md-entry-js.51d94936.chunk.js
+  2.75 KB    build/static/js/stencil-ion-textarea-ios-entry-js.ca27c9dc.chunk.js
+  2.75 KB    build/static/js/stencil-ion-textarea-md-entry-js.3ac62b79.chunk.js
+  2.59 KB    build/static/js/stencil-ion-card_5-ios-entry-js.658f46ec.chunk.js
+  2.59 KB    build/static/js/stencil-ion-card_5-md-entry-js.5f298c64.chunk.js
+  2.58 KB    build/static/js/stencil-ion-radio_2-ios-entry-js.e9f2f495.chunk.js
+  2.58 KB    build/static/js/stencil-ion-radio_2-md-entry-js.fc5ec848.chunk.js
+  2.37 KB    build/static/js/stencil-ion-progress-bar-ios-entry-js.8bcee973.chunk.js
+  2.37 KB    build/static/js/stencil-ion-progress-bar-md-entry-js.703fb0af.chunk.js
+  2.33 KB    build/static/js/stencil-ion-reorder_2-md-entry-js.56813e6a.chunk.js
+  2.33 KB    build/static/js/stencil-ion-reorder_2-ios-entry-js.cfc0df6a.chunk.js
+  2.32 KB    build/static/js/stencil-ion-checkbox-ios-entry-js.08895094.chunk.js
+  2.32 KB    build/static/js/stencil-ion-checkbox-md-entry-js.17e1137f.chunk.js
+  2.32 KB    build/static/js/main.bbf38b2a.chunk.js
+  2.28 KB    build/static/js/stencil-ion-infinite-scroll_2-ios-entry-js.f09c61a1.chunk.js
+  2.28 KB    build/static/js/stencil-ion-infinite-scroll_2-md-entry-js.bd4741ec.chunk.js
+  2.15 KB    build/static/js/stencil-ion-spinner-entry-js.eb863bad.chunk.js
+  2.1 KB     build/static/js/95.a8a297e4.chunk.js
+  2.09 KB    build/static/js/92.512ca4b7.chunk.js
+  2.01 KB    build/static/js/stencil-ion-tab_2-entry-js.01152175.chunk.js
+  1.92 KB    build/static/js/2.3c6c64f2.chunk.js
+  1.79 KB    build/static/js/stencil-ion-col_3-entry-js.c83260f3.chunk.js
+  1.68 KB    build/static/js/stencil-ion-chip-ios-entry-js.a536a820.chunk.js
+  1.68 KB    build/static/js/stencil-ion-chip-md-entry-js.c3d85ea3.chunk.js
+  1.67 KB    build/static/js/94.1f2f25d2.chunk.js
+  1.43 KB    build/static/js/stencil-ion-split-pane-ios-entry-js.df78731d.chunk.js
+  1.42 KB    build/static/js/stencil-ion-split-pane-md-entry-js.a45d4a20.chunk.js
+  1.39 KB    build/static/js/stencil-ion-avatar_3-ios-entry-js.3632ea50.chunk.js
+  1.39 KB    build/static/js/stencil-ion-avatar_3-md-entry-js.cb502a8b.chunk.js
+  1.24 KB    build/static/js/stencil-ion-ripple-effect-entry-js.5cdc3843.chunk.js
+  1.1 KB     build/static/css/main.4bd47c98.chunk.css
+  955 B      build/static/js/5.74873ff9.chunk.js
+  826 B      build/static/js/stencil-ion-text-entry-js.173ce2b8.chunk.js
+  799 B      build/static/js/stencil-ion-backdrop-ios-entry-js.965286e7.chunk.js
+  798 B      build/static/js/stencil-ion-backdrop-md-entry-js.4c48a60f.chunk.js
+  726 B      build/static/js/stencil-ion-img-entry-js.80f6e6b3.chunk.js
+  565 B      build/static/js/89.eb4f2637.chunk.js
+  559 B      build/static/css/52.fb78b45d.chunk.css
+  499 B      build/static/js/67.c24e5b6e.chunk.js
+  469 B      build/static/js/1.e219b71b.chunk.js
+  460 B      build/static/js/0.5f6cbd44.chunk.js
+  343 B      build/static/js/3.0af4d923.chunk.js
+
+The project was built assuming it is hosted at /.
+You can control this with the homepage field in your package.json.
+
+The build folder is ready to be deployed.
+You may serve it with a static server:
+
+  npm install -g serve
+  serve -s build
+
+Find out more about deployment here:
+
+  bit.ly/CRA-deploy
+
+
+Showing logs for build [32mbeethub-beet-master-release-6s8dk-8[0m stage [32mfrom-build-pack[0m and container [32mstep-build-container-build[0m
+[36mINFO[0m[0000] Downloading base image nginx:stable-alpine   
+[36mINFO[0m[0000] Error while retrieving image from cache: getting file info: stat /workspace/sha256:676b8117782d9e8c20af8e1b19356f64acc76c981f3a65c66e33a9874877892a: no such file or directory 
+[36mINFO[0m[0000] Downloading base image nginx:stable-alpine   
+[36mINFO[0m[0000] Checking for cached layer docker.io/todo/cache:5c88d160fd398905049a64ef1d6af049200a86087a1aa15f3c1704a42a4dd74e... 
+[36mINFO[0m[0001] No cached layer found for cmd RUN apk add --no-cache bash 
+[36mINFO[0m[0001] Unpacking rootfs as cmd RUN apk add --no-cache bash requires it. 
+[36mINFO[0m[0001] Taking snapshot of full filesystem...        
+[36mINFO[0m[0002] RUN apk add --no-cache bash                  
+[36mINFO[0m[0002] cmd: /bin/sh                                 
+[36mINFO[0m[0002] args: [-c apk add --no-cache bash]           
+fetch http://dl-cdn.alpinelinux.org/alpine/v3.11/main/x86_64/APKINDEX.tar.gz
+fetch http://dl-cdn.alpinelinux.org/alpine/v3.11/community/x86_64/APKINDEX.tar.gz
+(1/2) Installing readline (8.0.1-r0)
+(2/2) Installing bash (5.0.11-r1)
+Executing bash-5.0.11-r1.post-install
+Executing busybox-1.31.1-r9.trigger
+OK: 25 MiB in 43 packages
+[36mINFO[0m[0002] Taking snapshot of full filesystem...        
+[36mINFO[0m[0002] Pushing layer docker.io/todo/cache:5c88d160fd398905049a64ef1d6af049200a86087a1aa15f3c1704a42a4dd74e to cache now 
+[36mINFO[0m[0002] RUN rm -rf /etc/nginx/conf.d                 
+[36mINFO[0m[0002] cmd: /bin/sh                                 
+[36mINFO[0m[0002] args: [-c rm -rf /etc/nginx/conf.d]          
+[36mINFO[0m[0002] Taking snapshot of full filesystem...        
+[36mINFO[0m[0002] Adding whiteout for /etc/nginx/conf.d        
+[36mINFO[0m[0002] Pushing layer docker.io/todo/cache:20132a846fa5890d1288eb99d73a4742008dd2f48d1aee20e0620ea0c18943d0 to cache now 
+[36mINFO[0m[0002] Using files from context: [/workspace/source/conf] 
+[36mINFO[0m[0002] COPY conf /etc/nginx                         
+[36mINFO[0m[0002] Taking snapshot of files...                  
+[36mINFO[0m[0002] Using files from context: [/workspace/source/build] 
+[36mINFO[0m[0002] COPY /build /usr/share/nginx/html            
+[36mINFO[0m[0002] Taking snapshot of files...                  
+[36mINFO[0m[0003] EXPOSE 80                                    
+[36mINFO[0m[0003] cmd: EXPOSE                                  
+[36mINFO[0m[0003] Adding exposed port: 80/tcp                  
+[36mINFO[0m[0003] No files changed in this command, skipping snapshotting. 
+[36mINFO[0m[0003] WORKDIR /usr/share/nginx/html                
+[36mINFO[0m[0003] cmd: workdir                                 
+[36mINFO[0m[0003] Changed working directory to /usr/share/nginx/html 
+[36mINFO[0m[0003] No files changed in this command, skipping snapshotting. 
+[36mINFO[0m[0003] Using files from context: [/workspace/source/env.sh] 
+[36mINFO[0m[0003] COPY ./env.sh .                              
+[36mINFO[0m[0003] Taking snapshot of files...                  
+[36mINFO[0m[0003] Using files from context: [/workspace/source/.env] 
+[36mINFO[0m[0003] COPY .env .                                  
+[36mINFO[0m[0003] Taking snapshot of files...                  
+[36mINFO[0m[0003] RUN chmod +x env.sh                          
+[36mINFO[0m[0003] cmd: /bin/sh                                 
+[36mINFO[0m[0003] args: [-c chmod +x env.sh]                   
+[36mINFO[0m[0003] Taking snapshot of full filesystem...        
+[36mINFO[0m[0003] No files were changed, appending empty layer to config. No layer added to image. 
+[36mINFO[0m[0003] CMD ["/bin/bash", "-c", "/usr/share/nginx/html/env.sh && nginx -g \"daemon off;\""] 
+[36mINFO[0m[0003] No files changed in this command, skipping snapshotting. 
+[36mINFO[0m[0003] Pushing layer docker.io/todo/cache:49158c3e6114149191c221c1abadd9b1fee0260f3d31bf2462a460a521fd9a7f to cache now 
+[33mWARN[0m[0003] error uploading layer to cache: failed to push to destination index.docker.io/todo/cache:5c88d160fd398905049a64ef1d6af049200a86087a1aa15f3c1704a42a4dd74e: unsupported status code 401; body:  
+2020/05/13 17:36:44 existing blob: sha256:6ade829cd166df9b2331da48e3e60342aef9f95e1e45cde8d20e6b01be7e6d9a
+2020/05/13 17:36:44 existing blob: sha256:cbdbe7a5bc2a134ca8ec91be58565ec07d037386d1f1d8385412d224deafca08
+2020/05/13 17:36:45 pushed blob: sha256:ee321ad7d21ceaff874657feab6021b939aa7353f7cb6070b3d8776d7a75ba7a
+2020/05/13 17:36:45 pushed blob: sha256:ccd6f05b9dfb3a042b34d628c979a6ae7fd893fc7d392b5ae5d7342b9b164dd1
+2020/05/13 17:36:45 pushed blob: sha256:855a9c756b04ddc7f3126198b6317b6c54052f614cf93631d0ad03dc8b94a134
+2020/05/13 17:36:45 pushed blob: sha256:6543a5aea6e7cbeb2775ead8306e4b382a59bfd9cd93a93ac684dea50f1ae52e
+2020/05/13 17:36:45 pushed blob: sha256:8a798425c4458da1c7d9a082fd2a70bead97c53e304f8aec01c98f2a03d6352f
+2020/05/13 17:36:45 pushed blob: sha256:963e3c8a5426d77710b93b99213f3ea15015ca3cf7e3ca757374d30bd51762a2
+2020/05/13 17:36:46 pushed blob: sha256:6e37b16e7535f6be99a8747a8c7896c355645676c47ea7c187662b858f35ecc6
+2020/05/13 17:36:46 index.docker.io/beethub/beet:0.0.17: digest: sha256:2f980e1f96db209c5bc0a41afdf91241d851a5efa2abd2bc6dbff1f3db7651f7 size: 1559
+
+Showing logs for build [32mbeethub-beet-master-release-6s8dk-8[0m stage [32mfrom-build-pack[0m and container [32mstep-build-post-build[0m
+no CVE provider running in the current ** namespace so skip adding image to be analysed
+
+Showing logs for build [32mbeethub-beet-master-release-6s8dk-8[0m stage [32mfrom-build-pack[0m and container [32mstep-promote-changelog[0m
+Converted /workspace/source/charts/beet to an unshallow repository
+Generating change log from git ref 77cee4b47a9bb9bba432a31a788e5cb4f821b660 => d41df2070e99da73b9f5f83ae4eea73d9f95e753
+Associating user x-0 in users.jenkins.io with email cesarac66@hotmail.com to git GitProvider user with login -0 as emails match
+Adding label jenkins.io/git-github-userid=-0 to user x-0 in users.jenkins.io
+WARNING: Failed to enrich commit 2fac260450edc26f3bbf7bab485d423c082c05cc with issues: User.jenkins.io "x-0" is invalid: metadata.labels: Invalid value: "-0": a valid label must be an empty string or consist of alphanumeric characters, '-', '_' or '.', and must start and end with an alphanumeric character (e.g. 'MyValue',  or 'my_value',  or '12345', regex used for validation is '(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])?')
+Associating user x-0 in users.jenkins.io with email cesarac66@hotmail.com to git GitProvider user with login -0 as emails match
+Adding label jenkins.io/git-github-userid=-0 to user x-0 in users.jenkins.io
+WARNING: Failed to enrich commit 2fac260450edc26f3bbf7bab485d423c082c05cc with issues: User.jenkins.io "x-0" is invalid: metadata.labels: Invalid value: "-0": a valid label must be an empty string or consist of alphanumeric characters, '-', '_' or '.', and must start and end with an alphanumeric character (e.g. 'MyValue',  or 'my_value',  or '12345', regex used for validation is '(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])?')
+Finding issues in commit messages using git format
+WARNING: No release found for beethub/beet and tag v0.0.17 so creating a new release
+Updated the release information at https://github.com/beethub/beet/releases/tag/v0.0.17
+generated: /workspace/source/charts/beet/templates/release.yaml
+Created Release beet-0-0-17 resource in namespace **
+Updating PipelineActivity beethub-beet-master-8 with version 0.0.17
+Updated PipelineActivities beethub-beet-master-8 with release notes URL: https://github.com/beethub/beet/releases/tag/v0.0.17
+
+Showing logs for build [32mbeethub-beet-master-release-6s8dk-8[0m stage [32mfrom-build-pack[0m and container [32mstep-promote-helm-release[0m
+WARNING: No $CHART_REPOSITORY defined so using the default value of: http://jenkins-x-chartmuseum:8080
+Adding missing Helm repo: storage.googleapis.com https://storage.googleapis.com/chartmuseum.jenkins-x.io
+Successfully added Helm repository storage.googleapis.com.
+Adding missing Helm repo: jenkins-x-chartmuseum http://jenkins-x-chartmuseum:8080
+Successfully added Helm repository jenkins-x-chartmuseum.
+WARNING: No $CHART_REPOSITORY defined so using the default value of: http://jenkins-x-chartmuseum:8080
+Uploading chart file beet-0.0.17.tgz to http://jenkins-x-chartmuseum:8080/api/charts
+Received 201 response: {"saved":true}
+
+Showing logs for build [32mbeethub-beet-master-release-6s8dk-8[0m stage [32mfrom-build-pack[0m and container [32mstep-promote-jx-promote[0m
+WARNING: prow based install so skip waiting for the merge of Pull Requests to go green as currently there is an issue with gettingstatuses from the PR, see https://github.com/jenkins-x/**/issues/2410
+WARNING: No $CHART_REPOSITORY defined so using the default value of: http://jenkins-x-chartmuseum:8080
+Promoting app beet version 0.0.17 to namespace **-staging
+WARNING: 
+Created Pull Request: https://github.com/beethub/environment-beet-k8s-1-staging/pull/43
+Added label updatebot to Pull Request https://github.com/beethub/environment-beet-k8s-1-staging/pull/43
+got git provider status pending from PR https://github.com/beethub/environment-beet-k8s-1-staging/pull/43
+got git provider status pending from PR https://github.com/beethub/environment-beet-k8s-1-staging/pull/43
+got git provider status pending from PR https://github.com/beethub/environment-beet-k8s-1-staging/pull/43
+got git provider status pending from PR https://github.com/beethub/environment-beet-k8s-1-staging/pull/43
+Pull Request https://github.com/beethub/environment-beet-k8s-1-staging/pull/43 is merged at sha 1acb8912312e69eeb375eab7c0e4a9913e293e77
+Pull Request merged but we are not waiting for the update pipeline to complete!
