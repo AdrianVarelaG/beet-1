@@ -1,0 +1,8 @@
+.loading-list__name {
+  width: 50%;
+  visibility: inherit;
+}
+.loading-list__details{
+  width: 70%;
+  visibility: inherit;
+}

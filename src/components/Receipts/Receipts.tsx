@@ -12,16 +12,15 @@ import { IReceiptsListFragment } from "../../generated/graphql";
 
 
 interface Props {
-  receipts: IReceiptsListFragment | undefined;
+  data?: IReceiptsListFragment;
 }
 
 const Receipts = (props: Props) => {
   const [startDeleting, setStartDeleting] = useState(false);
   const slidingOptionsRef = useRef<HTMLIonItemSlidingElement>(null);
-  const {receipts} = props;
+  const {data} = props;
 
   const startDeleteHandler = (receiptId: string) => {
-    console.log(receiptId);
     setStartDeleting(true);
   };
   const deleteHandler = () => {
@@ -29,7 +28,7 @@ const Receipts = (props: Props) => {
     console.log("deleting");
   };
 
-  const items = receipts?.receipts?.map((r) => (
+  const items = data?.receipts.map((r) => (
     <ReceiptComponent
       key={r?.id}
       receipt={r}
@@ -74,12 +73,9 @@ const Receipts = (props: Props) => {
 };
 
 Receipts.fragment = gql`
-  fragment ReceiptsList on Query {
-    receipts (filter: $filter) {
+  fragment ReceiptsList on ReceiptResponse {
+    receipts {
       ...ReceiptDataList
-      ticket {
-        url
-      } 
     }
   }
   ${ReceiptComponent.fragment}

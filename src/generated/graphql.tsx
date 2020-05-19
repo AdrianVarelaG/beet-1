@@ -14,7 +14,109 @@ export type Scalars = {
   Upload: any;
 };
 
+export type INotification = {
+   __typename?: 'Notification';
+  title?: Maybe<Scalars['String']>;
+  message?: Maybe<Scalars['String']>;
+  date?: Maybe<Scalars['String']>;
+  readed?: Maybe<Scalars['Boolean']>;
+};
 
+export type IConfiguration = {
+   __typename?: 'Configuration';
+  invoiceProfile?: Maybe<IInvoiceProfile>;
+  notification?: Maybe<IConfigNotification>;
+};
+
+export type IConfigNotification = {
+   __typename?: 'ConfigNotification';
+  invoiceResult: Scalars['Boolean'];
+};
+
+export type IInvoiceProfile = {
+   __typename?: 'InvoiceProfile';
+  rfc: Scalars['String'];
+  razonSocial: Scalars['String'];
+  direccion?: Maybe<IAddress>;
+};
+
+export type IInputAdress = {
+  calle?: Maybe<Scalars['String']>;
+  numeroExterior?: Maybe<Scalars['String']>;
+  numeroInterior?: Maybe<Scalars['String']>;
+  colonia?: Maybe<Scalars['String']>;
+  codigoPostal?: Maybe<Scalars['String']>;
+};
+
+export type IInvoiceProfileInput = {
+  rfc: Scalars['String'];
+  razonSocial: Scalars['String'];
+  direccion?: Maybe<IInputAdress>;
+};
+
+export type IAddress = {
+   __typename?: 'Address';
+  calle?: Maybe<Scalars['String']>;
+  numeroExterior?: Maybe<Scalars['String']>;
+  numeroInterior?: Maybe<Scalars['String']>;
+  colonia?: Maybe<Scalars['String']>;
+  codigoPostal?: Maybe<Scalars['String']>;
+};
+
+export type IMutationConfigNotification = IMutationResponse & {
+   __typename?: 'MutationConfigNotification';
+  code: Scalars['String'];
+  success: Scalars['Boolean'];
+  message: Scalars['String'];
+  notification?: Maybe<IConfigNotification>;
+};
+
+export type IMutationInvoiceProfile = IMutationResponse & {
+   __typename?: 'MutationInvoiceProfile';
+  code: Scalars['String'];
+  success: Scalars['Boolean'];
+  message: Scalars['String'];
+  invoiceProfile?: Maybe<IInvoiceProfile>;
+};
+
+export type IQuery = {
+   __typename?: 'Query';
+  configuration?: Maybe<IConfiguration>;
+  receipts: IReceiptResponse;
+  receipt?: Maybe<IReceipt>;
+};
+
+
+export type IQueryReceiptsArgs = {
+  input?: Maybe<IReceiptFilter>;
+};
+
+
+export type IQueryReceiptArgs = {
+  id: Scalars['ID'];
+};
+
+export type IMutation = {
+   __typename?: 'Mutation';
+  updateNotificationInvoiceResult?: Maybe<IMutationConfigNotification>;
+  updateInvoiceProfile?: Maybe<IMutationInvoiceProfile>;
+  createReceipt: IMutationReceiptResponse;
+};
+
+
+export type IMutationUpdateNotificationInvoiceResultArgs = {
+  input: Scalars['Boolean'];
+};
+
+
+export type IMutationUpdateInvoiceProfileArgs = {
+  input: IInvoiceProfileInput;
+};
+
+
+export type IMutationCreateReceiptArgs = {
+  file: Scalars['Upload'];
+};
 
 export type IReceipt = {
    __typename?: 'Receipt';
@@ -40,6 +142,11 @@ export type ITicket = {
   url: Scalars['String'];
 };
 
+export enum IResponsable {
+  User = 'USER',
+  System = 'SYSTEM'
+}
+
 export enum IReceiptStatus {
   InProgress = 'IN_PROGRESS',
   Generating = 'GENERATING',
@@ -47,17 +154,15 @@ export enum IReceiptStatus {
   Error = 'ERROR'
 }
 
-export type IReceiptConnection = {
-   __typename?: 'ReceiptConnection';
-  cursor: Scalars['String'];
-  hasMore: Scalars['Boolean'];
-  receipts: Array<Maybe<IReceipt>>;
+export type IReceiptFilter = {
+  text?: Maybe<Scalars['String']>;
+  status?: Maybe<Array<Maybe<IReceiptStatus>>>;
 };
 
-export type IMutationResponse = {
-  code: Scalars['String'];
-  success: Scalars['Boolean'];
-  message: Scalars['String'];
+export type IReceiptResponse = IResponse & {
+   __typename?: 'ReceiptResponse';
+  totalCount: Scalars['Int'];
+  receipts: Array<Maybe<IReceipt>>;
 };
 
 export type IMutationReceiptResponse = IMutationResponse & {
@@ -68,38 +173,43 @@ export type IMutationReceiptResponse = IMutationResponse & {
   receipt?: Maybe<IReceipt>;
 };
 
-export type IFile = {
-   __typename?: 'File';
-  filename: Scalars['String'];
-  mimetype: Scalars['String'];
-  encoding: Scalars['String'];
+
+
+export type IMutationResponse = {
+  code: Scalars['String'];
+  success: Scalars['Boolean'];
+  message: Scalars['String'];
 };
 
-export type IQuery = {
-   __typename?: 'Query';
-  receipts: Array<Maybe<IReceipt>>;
-  receipt?: Maybe<IMutationReceiptResponse>;
+export type IResponse = {
+  totalCount: Scalars['Int'];
+};
+
+export type IReceiptDataListFragment = (
+  { __typename?: 'Receipt' }
+  & Pick<IReceipt, 'id' | 'business' | 'createdDate' | 'amount' | 'status' | 'date'>
+);
+
+export type IReceiptsListFragment = (
+  { __typename?: 'ReceiptResponse' }
+  & { receipts: Array<Maybe<(
+    { __typename?: 'Receipt' }
+    & IReceiptDataListFragment
+  )>> }
+);
+
+export type IReceiptListQueryVariables = {
+  input?: Maybe<IReceiptFilter>;
 };
 
 
-export type IQueryReceiptsArgs = {
-  filter?: Maybe<Scalars['String']>;
-};
-
-
-export type IQueryReceiptArgs = {
-  id: Scalars['ID'];
-};
-
-export type IMutation = {
-   __typename?: 'Mutation';
-  createReceipt: IMutationReceiptResponse;
-};
-
-
-export type IMutationCreateReceiptArgs = {
-  file: Scalars['Upload'];
-};
+export type IReceiptListQuery = (
+  { __typename?: 'Query' }
+  & { receipts: (
+    { __typename?: 'ReceiptResponse' }
+    & IReceiptsListFragment
+  ) }
+);
 
 export type IUploadFileMutationVariables = {
   file: Scalars['Upload'];
@@ -118,31 +228,38 @@ export type IUploadFileMutation = (
   ) }
 );
 
-export type IReceiptDataListFragment = (
-  { __typename?: 'Receipt' }
-  & Pick<IReceipt, 'id' | 'business' | 'createdDate' | 'amount' | 'status' | 'date'>
-);
+export type IGetMenuConfigQueryVariables = {};
 
-export type IReceiptsListFragment = (
+
+export type IGetMenuConfigQuery = (
   { __typename?: 'Query' }
-  & { receipts: Array<Maybe<(
-    { __typename?: 'Receipt' }
-    & { ticket?: Maybe<(
-      { __typename?: 'Ticket' }
-      & Pick<ITicket, 'url'>
+  & { configuration?: Maybe<(
+    { __typename?: 'Configuration' }
+    & { notification?: Maybe<(
+      { __typename?: 'ConfigNotification' }
+      & Pick<IConfigNotification, 'invoiceResult'>
+    )>, invoiceProfile?: Maybe<(
+      { __typename?: 'InvoiceProfile' }
+      & Pick<IInvoiceProfile, 'rfc'>
     )> }
-    & IReceiptDataListFragment
-  )>> }
+  )> }
 );
 
-export type IReceiptListQueryVariables = {
-  filter?: Maybe<Scalars['String']>;
+export type IUpdateInvoiceResultNotificationMutationVariables = {
+  input: Scalars['Boolean'];
 };
 
 
-export type IReceiptListQuery = (
-  { __typename?: 'Query' }
-  & IReceiptsListFragment
+export type IUpdateInvoiceResultNotificationMutation = (
+  { __typename?: 'Mutation' }
+  & { updateNotificationInvoiceResult?: Maybe<(
+    { __typename?: 'MutationConfigNotification' }
+    & Pick<IMutationConfigNotification, 'success'>
+    & { notification?: Maybe<(
+      { __typename?: 'ConfigNotification' }
+      & Pick<IConfigNotification, 'invoiceResult'>
+    )> }
+  )> }
 );
 
 export const ReceiptDataListFragmentDoc = gql`
@@ -156,15 +273,45 @@ export const ReceiptDataListFragmentDoc = gql`
 }
     `;
 export const ReceiptsListFragmentDoc = gql`
-    fragment ReceiptsList on Query {
-  receipts(filter: $filter) {
+    fragment ReceiptsList on ReceiptResponse {
+  receipts {
     ...ReceiptDataList
-    ticket {
-      url
-    }
   }
 }
     ${ReceiptDataListFragmentDoc}`;
+export const ReceiptListDocument = gql`
+    query ReceiptList($input: ReceiptFilter) {
+  receipts(input: $input) {
+    ...ReceiptsList
+  }
+}
+    ${ReceiptsListFragmentDoc}`;
+
+/**
+ * __useReceiptListQuery__
+ *
+ * To run a query within a React component, call `useReceiptListQuery` and pass it any options that fit your needs.
+ * When your component renders, `useReceiptListQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useReceiptListQuery({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useReceiptListQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<IReceiptListQuery, IReceiptListQueryVariables>) {
+        return ApolloReactHooks.useQuery<IReceiptListQuery, IReceiptListQueryVariables>(ReceiptListDocument, baseOptions);
+      }
+export function useReceiptListLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<IReceiptListQuery, IReceiptListQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<IReceiptListQuery, IReceiptListQueryVariables>(ReceiptListDocument, baseOptions);
+        }
+export type ReceiptListQueryHookResult = ReturnType<typeof useReceiptListQuery>;
+export type ReceiptListLazyQueryHookResult = ReturnType<typeof useReceiptListLazyQuery>;
+export type ReceiptListQueryResult = ApolloReactCommon.QueryResult<IReceiptListQuery, IReceiptListQueryVariables>;
 export const UploadFileDocument = gql`
     mutation uploadFile($file: Upload!) {
   createReceipt(file: $file) {
@@ -200,34 +347,75 @@ export function useUploadFileMutation(baseOptions?: ApolloReactHooks.MutationHoo
 export type UploadFileMutationHookResult = ReturnType<typeof useUploadFileMutation>;
 export type UploadFileMutationResult = ApolloReactCommon.MutationResult<IUploadFileMutation>;
 export type UploadFileMutationOptions = ApolloReactCommon.BaseMutationOptions<IUploadFileMutation, IUploadFileMutationVariables>;
-export const ReceiptListDocument = gql`
-    query ReceiptList($filter: String) {
-  ...ReceiptsList
+export const GetMenuConfigDocument = gql`
+    query getMenuConfig {
+  configuration {
+    notification {
+      invoiceResult
+    }
+    invoiceProfile {
+      rfc
+    }
+  }
 }
-    ${ReceiptsListFragmentDoc}`;
+    `;
 
 /**
- * __useReceiptListQuery__
+ * __useGetMenuConfigQuery__
  *
- * To run a query within a React component, call `useReceiptListQuery` and pass it any options that fit your needs.
- * When your component renders, `useReceiptListQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useGetMenuConfigQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetMenuConfigQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useReceiptListQuery({
+ * const { data, loading, error } = useGetMenuConfigQuery({
  *   variables: {
- *      filter: // value for 'filter'
  *   },
  * });
  */
-export function useReceiptListQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<IReceiptListQuery, IReceiptListQueryVariables>) {
-        return ApolloReactHooks.useQuery<IReceiptListQuery, IReceiptListQueryVariables>(ReceiptListDocument, baseOptions);
+export function useGetMenuConfigQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<IGetMenuConfigQuery, IGetMenuConfigQueryVariables>) {
+        return ApolloReactHooks.useQuery<IGetMenuConfigQuery, IGetMenuConfigQueryVariables>(GetMenuConfigDocument, baseOptions);
       }
-export function useReceiptListLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<IReceiptListQuery, IReceiptListQueryVariables>) {
-          return ApolloReactHooks.useLazyQuery<IReceiptListQuery, IReceiptListQueryVariables>(ReceiptListDocument, baseOptions);
+export function useGetMenuConfigLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<IGetMenuConfigQuery, IGetMenuConfigQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<IGetMenuConfigQuery, IGetMenuConfigQueryVariables>(GetMenuConfigDocument, baseOptions);
         }
-export type ReceiptListQueryHookResult = ReturnType<typeof useReceiptListQuery>;
-export type ReceiptListLazyQueryHookResult = ReturnType<typeof useReceiptListLazyQuery>;
-export type ReceiptListQueryResult = ApolloReactCommon.QueryResult<IReceiptListQuery, IReceiptListQueryVariables>;
+export type GetMenuConfigQueryHookResult = ReturnType<typeof useGetMenuConfigQuery>;
+export type GetMenuConfigLazyQueryHookResult = ReturnType<typeof useGetMenuConfigLazyQuery>;
+export type GetMenuConfigQueryResult = ApolloReactCommon.QueryResult<IGetMenuConfigQuery, IGetMenuConfigQueryVariables>;
+export const UpdateInvoiceResultNotificationDocument = gql`
+    mutation updateInvoiceResultNotification($input: Boolean!) {
+  updateNotificationInvoiceResult(input: $input) {
+    success
+    notification {
+      invoiceResult
+    }
+  }
+}
+    `;
+export type IUpdateInvoiceResultNotificationMutationFn = ApolloReactCommon.MutationFunction<IUpdateInvoiceResultNotificationMutation, IUpdateInvoiceResultNotificationMutationVariables>;
+
+/**
+ * __useUpdateInvoiceResultNotificationMutation__
+ *
+ * To run a mutation, you first call `useUpdateInvoiceResultNotificationMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateInvoiceResultNotificationMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateInvoiceResultNotificationMutation, { data, loading, error }] = useUpdateInvoiceResultNotificationMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUpdateInvoiceResultNotificationMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<IUpdateInvoiceResultNotificationMutation, IUpdateInvoiceResultNotificationMutationVariables>) {
+        return ApolloReactHooks.useMutation<IUpdateInvoiceResultNotificationMutation, IUpdateInvoiceResultNotificationMutationVariables>(UpdateInvoiceResultNotificationDocument, baseOptions);
+      }
+export type UpdateInvoiceResultNotificationMutationHookResult = ReturnType<typeof useUpdateInvoiceResultNotificationMutation>;
+export type UpdateInvoiceResultNotificationMutationResult = ApolloReactCommon.MutationResult<IUpdateInvoiceResultNotificationMutation>;
+export type UpdateInvoiceResultNotificationMutationOptions = ApolloReactCommon.BaseMutationOptions<IUpdateInvoiceResultNotificationMutation, IUpdateInvoiceResultNotificationMutationVariables>;

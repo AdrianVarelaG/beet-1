@@ -25,7 +25,7 @@ const ReceiptPage: React.FC & {
   };
   const [filter, setFilter] = useState("");
   const { loading, error, data, refetch } = useReceiptListQuery({
-    variables: { filter },
+    variables: { input: {text: filter} },
   });
   const [message, setMessage] = useState("");
   const [addFile, addFileResponse] = useUploadFileMutation({
@@ -38,9 +38,6 @@ const ReceiptPage: React.FC & {
     data: dataMutation,
   } = addFileResponse;
 
-  console.log("rendering");
-  console.log(data);
-
   const addReceipt = useCallback(
     async (file: File) => {
       addFile({ variables: { file: file } });
@@ -51,7 +48,7 @@ const ReceiptPage: React.FC & {
   const newFilterHandler = async (f: string) => {
     try {
       setFilter(f);
-      await refetch({ filter: f });
+      await refetch({ input: {text: filter} });
     } catch (error) {
       console.log(error);
     }
@@ -59,7 +56,7 @@ const ReceiptPage: React.FC & {
 
   let content = (
     <Fragment>
-      <Receipts receipts={data} />
+      <Receipts data={data?.receipts} />
       <AddReceiptFixedBottom icon={add} onFilePicker={addReceipt} />
     </Fragment>
   );
@@ -91,8 +88,10 @@ const ReceiptPage: React.FC & {
 };
 
 ReceiptPage.fragment = gql`
-  query ReceiptList($filter: String) {
-    ...ReceiptsList
+  query ReceiptList($input: ReceiptFilter) {
+    receipts(input: $input){
+      ...ReceiptsList
+    }
   }
   ${Receipts.fragment}
 `;

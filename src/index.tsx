@@ -42,7 +42,7 @@ kc.init({ onLoad: "login-required" })
     const link = createUploadLink({
       uri: (window as any)._env_?.BACKEND_URL,
     });
-    console.log(kc);
+    
     const cache = new InMemoryCache();
     const client = new ApolloClient({
       cache,

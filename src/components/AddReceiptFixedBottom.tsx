@@ -43,7 +43,7 @@ const AddReceiptFixedBottom = (props: Props) => {
 
   return (
     <Fragment>
-      <IonFab vertical="bottom" horizontal="end" slot="fixed">
+      <IonFab vertical="bottom" horizontal="end" slot="fixed" >
         <input
           ref={inputRef}
           hidden
@@ -52,7 +52,7 @@ const AddReceiptFixedBottom = (props: Props) => {
           accept="image/*"
           capture="environment"
         />
-        <IonFabButton onClick={onClickHandler}>
+        <IonFabButton onClick={onClickHandler} color="secondary" size="small">
           <IonIcon icon={icon} />
         </IonFabButton>
       </IonFab>

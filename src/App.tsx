@@ -1,6 +1,11 @@
 import React from "react";
 import { Route } from "react-router-dom";
-import { IonApp, IonRouterOutlet, IonSpinner } from "@ionic/react";
+import {
+  IonApp,
+  IonRouterOutlet,
+  IonSpinner,
+  IonSplitPane,
+} from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
 
 /* Core CSS required for Ionic components to work properly */
@@ -22,27 +27,44 @@ import "@ionic/react/css/display.css";
 /* Theme variables */
 import "./theme/variables.css";
 import Logout from "./components/logout";
+import RouteMenu from "./components/Navigation/RouteMenu";
+import RouteBackMenu from "./components/Navigation/RouteBackMenu";
 
 const Menu = React.lazy(() => import("./components/Navigation/Menu"));
-const Settings = React.lazy(() => import("./components/Navigation/Settings"));
+const SettingsMenu = React.lazy(() => import("./pages/SettingsMenu"));
 const TabsMenu = React.lazy(() => import("./components/Navigation/TabsMenu"));
+const SettingsPage = React.lazy(() =>
+  import("./pages/ReceiverPage")
+);
 
 const App: React.FC = () => (
   <IonApp>
     <IonReactRouter>
       <React.Suspense fallback={<IonSpinner />}>
-        <Menu />
-        <IonRouterOutlet id="main">
-          <Route path="/settings">
-            <Settings />
-          </Route>
-          <Route path="/logout">
-            <Logout />
-          </Route>
-          <Route path="/">
-            <TabsMenu />
-          </Route>
-        </IonRouterOutlet>
+        <IonSplitPane contentId="main">
+          <Menu />
+          <IonRouterOutlet id="main">
+            <Route path="/settings/receiver">
+              <RouteBackMenu
+                redirectBack="/settings"
+                title="Perfil de facturacion"
+              >
+                <SettingsPage />
+              </RouteBackMenu>
+            </Route>
+            <Route path="/settings">
+              <RouteMenu title="Configuracion">
+                <SettingsMenu />
+              </RouteMenu>
+            </Route>
+            <Route path="/logout">
+              <Logout />
+            </Route>
+            <Route path="/">
+              <TabsMenu />
+            </Route>
+          </IonRouterOutlet>
+        </IonSplitPane>
       </React.Suspense>
     </IonReactRouter>
   </IonApp>
