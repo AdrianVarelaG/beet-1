@@ -198,6 +198,15 @@ export type IReceiptsListFragment = (
   )>> }
 );
 
+export type IInvoiceProfileInfoFragment = (
+  { __typename?: 'InvoiceProfile' }
+  & Pick<IInvoiceProfile, 'rfc' | 'razonSocial'>
+  & { direccion?: Maybe<(
+    { __typename?: 'Address' }
+    & Pick<IAddress, 'calle' | 'numeroExterior' | 'numeroInterior' | 'colonia' | 'codigoPostal'>
+  )> }
+);
+
 export type IReceiptListQueryVariables = {
   input?: Maybe<IReceiptFilter>;
 };
@@ -226,6 +235,46 @@ export type IUploadFileMutation = (
       & IReceiptDataListFragment
     )> }
   ) }
+);
+
+export type IGetInvoiceProfileQueryVariables = {};
+
+
+export type IGetInvoiceProfileQuery = (
+  { __typename?: 'Query' }
+  & { configuration?: Maybe<(
+    { __typename?: 'Configuration' }
+    & { invoiceProfile?: Maybe<(
+      { __typename?: 'InvoiceProfile' }
+      & IInvoiceProfileInfoFragment
+    )> }
+  )> }
+);
+
+export type IReceiptCountQueryVariables = {
+  input?: Maybe<IReceiptFilter>;
+};
+
+
+export type IReceiptCountQuery = (
+  { __typename?: 'Query' }
+  & { receipts: (
+    { __typename?: 'ReceiptResponse' }
+    & Pick<IReceiptResponse, 'totalCount'>
+  ) }
+);
+
+export type ISetInvoiceProfileMutationVariables = {
+  input: IInvoiceProfileInput;
+};
+
+
+export type ISetInvoiceProfileMutation = (
+  { __typename?: 'Mutation' }
+  & { updateInvoiceProfile?: Maybe<(
+    { __typename?: 'MutationInvoiceProfile' }
+    & Pick<IMutationInvoiceProfile, 'success'>
+  )> }
 );
 
 export type IGetMenuConfigQueryVariables = {};
@@ -279,6 +328,19 @@ export const ReceiptsListFragmentDoc = gql`
   }
 }
     ${ReceiptDataListFragmentDoc}`;
+export const InvoiceProfileInfoFragmentDoc = gql`
+    fragment InvoiceProfileInfo on InvoiceProfile {
+  rfc
+  razonSocial
+  direccion {
+    calle
+    numeroExterior
+    numeroInterior
+    colonia
+    codigoPostal
+  }
+}
+    `;
 export const ReceiptListDocument = gql`
     query ReceiptList($input: ReceiptFilter) {
   receipts(input: $input) {
@@ -347,6 +409,105 @@ export function useUploadFileMutation(baseOptions?: ApolloReactHooks.MutationHoo
 export type UploadFileMutationHookResult = ReturnType<typeof useUploadFileMutation>;
 export type UploadFileMutationResult = ApolloReactCommon.MutationResult<IUploadFileMutation>;
 export type UploadFileMutationOptions = ApolloReactCommon.BaseMutationOptions<IUploadFileMutation, IUploadFileMutationVariables>;
+export const GetInvoiceProfileDocument = gql`
+    query getInvoiceProfile {
+  configuration {
+    invoiceProfile {
+      ...InvoiceProfileInfo
+    }
+  }
+}
+    ${InvoiceProfileInfoFragmentDoc}`;
+
+/**
+ * __useGetInvoiceProfileQuery__
+ *
+ * To run a query within a React component, call `useGetInvoiceProfileQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetInvoiceProfileQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetInvoiceProfileQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetInvoiceProfileQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<IGetInvoiceProfileQuery, IGetInvoiceProfileQueryVariables>) {
+        return ApolloReactHooks.useQuery<IGetInvoiceProfileQuery, IGetInvoiceProfileQueryVariables>(GetInvoiceProfileDocument, baseOptions);
+      }
+export function useGetInvoiceProfileLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<IGetInvoiceProfileQuery, IGetInvoiceProfileQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<IGetInvoiceProfileQuery, IGetInvoiceProfileQueryVariables>(GetInvoiceProfileDocument, baseOptions);
+        }
+export type GetInvoiceProfileQueryHookResult = ReturnType<typeof useGetInvoiceProfileQuery>;
+export type GetInvoiceProfileLazyQueryHookResult = ReturnType<typeof useGetInvoiceProfileLazyQuery>;
+export type GetInvoiceProfileQueryResult = ApolloReactCommon.QueryResult<IGetInvoiceProfileQuery, IGetInvoiceProfileQueryVariables>;
+export const ReceiptCountDocument = gql`
+    query ReceiptCount($input: ReceiptFilter) {
+  receipts(input: $input) {
+    totalCount
+  }
+}
+    `;
+
+/**
+ * __useReceiptCountQuery__
+ *
+ * To run a query within a React component, call `useReceiptCountQuery` and pass it any options that fit your needs.
+ * When your component renders, `useReceiptCountQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useReceiptCountQuery({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useReceiptCountQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<IReceiptCountQuery, IReceiptCountQueryVariables>) {
+        return ApolloReactHooks.useQuery<IReceiptCountQuery, IReceiptCountQueryVariables>(ReceiptCountDocument, baseOptions);
+      }
+export function useReceiptCountLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<IReceiptCountQuery, IReceiptCountQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<IReceiptCountQuery, IReceiptCountQueryVariables>(ReceiptCountDocument, baseOptions);
+        }
+export type ReceiptCountQueryHookResult = ReturnType<typeof useReceiptCountQuery>;
+export type ReceiptCountLazyQueryHookResult = ReturnType<typeof useReceiptCountLazyQuery>;
+export type ReceiptCountQueryResult = ApolloReactCommon.QueryResult<IReceiptCountQuery, IReceiptCountQueryVariables>;
+export const SetInvoiceProfileDocument = gql`
+    mutation setInvoiceProfile($input: InvoiceProfileInput!) {
+  updateInvoiceProfile(input: $input) {
+    success
+  }
+}
+    `;
+export type ISetInvoiceProfileMutationFn = ApolloReactCommon.MutationFunction<ISetInvoiceProfileMutation, ISetInvoiceProfileMutationVariables>;
+
+/**
+ * __useSetInvoiceProfileMutation__
+ *
+ * To run a mutation, you first call `useSetInvoiceProfileMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSetInvoiceProfileMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [setInvoiceProfileMutation, { data, loading, error }] = useSetInvoiceProfileMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useSetInvoiceProfileMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<ISetInvoiceProfileMutation, ISetInvoiceProfileMutationVariables>) {
+        return ApolloReactHooks.useMutation<ISetInvoiceProfileMutation, ISetInvoiceProfileMutationVariables>(SetInvoiceProfileDocument, baseOptions);
+      }
+export type SetInvoiceProfileMutationHookResult = ReturnType<typeof useSetInvoiceProfileMutation>;
+export type SetInvoiceProfileMutationResult = ApolloReactCommon.MutationResult<ISetInvoiceProfileMutation>;
+export type SetInvoiceProfileMutationOptions = ApolloReactCommon.BaseMutationOptions<ISetInvoiceProfileMutation, ISetInvoiceProfileMutationVariables>;
 export const GetMenuConfigDocument = gql`
     query getMenuConfig {
   configuration {

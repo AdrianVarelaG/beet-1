@@ -1,30 +1,32 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   IonGrid,
   IonCol,
   IonRow,
   IonLabel,
-  IonItem,
-  IonInput,
   IonIcon,
   IonButton,
   IonItemGroup,
   IonItemDivider,
 } from "@ionic/react";
-import { useForm, Controller, ErrorMessage } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import * as Yup from "yup";
 import { saveSharp } from "ionicons/icons";
-import { argsToArgsConfig } from "graphql/type/definition";
 import TextInput from "../Form/TextInput";
+import gql from "graphql-tag";
+import {
+  IInvoiceProfileInfoFragment,
+  IInvoiceProfileInput,
+} from "../../generated/graphql";
 
 type TForm = {
   rfc: string;
   razonSocial: string;
-  calle: string;
-  numeroExterior: string;
-  numeroInterior: string;
-  colonia: string;
-  codigoPostal: number;
+  calle?: string;
+  numeroExterior?: string;
+  numeroInterior?: string;
+  colonia?: string;
+  codigoPostal?: string;
 };
 
 const ReceiverSchema = Yup.object().shape({
@@ -34,23 +36,83 @@ const ReceiverSchema = Yup.object().shape({
     })
     .required("El RFC es obligatorio"),
   razonSocial: Yup.string().required("La razon social es obligatoria"),
-  codigoPostal: Yup.string()
-    .matches(/^[0-9]{5}$/, {
-      message: "Formato no valido"
-    })
+  codigoPostal: Yup.string().required("Codigo postal es obligatorio").matches(/^[0-9]{5}$/, {
+    message: "Formato no valido",
+  }),
 });
 
-interface ReceiverFormProps {}
+const toTFormData = (
+  invoiceProfileInfo?: IInvoiceProfileInfoFragment | null
+): TForm => {
+  if (invoiceProfileInfo) {
+    const ret: TForm = {
+      rfc: invoiceProfileInfo.rfc,
+      razonSocial: invoiceProfileInfo.razonSocial,
+    };
+    if (invoiceProfileInfo.direccion) {
+      const dir = invoiceProfileInfo.direccion;
+      ret.calle = dir.calle ? dir.calle : undefined;
+      ret.numeroExterior = dir.numeroExterior ? dir.numeroExterior : undefined;
+      ret.numeroInterior = dir.numeroInterior ? dir.numeroInterior : undefined;
+      ret.colonia = dir.colonia ? dir.colonia : undefined;
+      ret.codigoPostal = dir.codigoPostal ? dir.codigoPostal : undefined;
+    }
 
-const ReceiverForm: React.FC<ReceiverFormProps> = () => {
-  const { handleSubmit, control, errors } = useForm<TForm>({
+    return ret;
+  }
+  return {
+    rfc: "",
+    razonSocial: "",
+  };
+};
+
+const toIInvoiceProfileInput = (input: TForm): IInvoiceProfileInput => {
+  const ret: IInvoiceProfileInput = {
+    rfc: input.rfc,
+    razonSocial: input.razonSocial,
+  };
+
+  if (
+    input.calle ||
+    input.numeroExterior ||
+    input.numeroInterior ||
+    input.colonia ||
+    input.codigoPostal
+  ) {
+    ret.direccion = {
+      calle: input.calle,
+      numeroExterior: input.numeroExterior,
+      numeroInterior: input.numeroInterior,
+      colonia: input.colonia,
+      codigoPostal: input.codigoPostal,
+    };
+  }
+
+  return ret;
+};
+
+interface ReceiverFormProps {
+  onSave: (input: IInvoiceProfileInput) => void;
+  invoiceProfileInfo?: IInvoiceProfileInfoFragment | null;
+  routeCancel: string;
+}
+
+const ReceiverForm = (props: ReceiverFormProps) => {
+  const { handleSubmit, control, errors, reset } = useForm<TForm>({
     validationSchema: ReceiverSchema,
+    //defaultValues: toTFormData(props.invoiceProfileInfo)
   });
+  const { routeCancel, onSave } = props;
 
-  const onSubmit = (data: TForm) => console.log(data);
+  useEffect(() => {
+    reset(toTFormData(props.invoiceProfileInfo));
+  }, [props.invoiceProfileInfo, reset]);
 
-  console.log(errors);
-  //color={errors.rfc? "danger": ""}
+  const onSubmit = (data: TForm) => {
+    onSave(toIInvoiceProfileInput(data));
+    //history.push(routeCancel);
+  };
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <IonGrid className="ion-no-padding">
@@ -142,7 +204,12 @@ const ReceiverForm: React.FC<ReceiverFormProps> = () => {
             offsetSm="1"
             className="ion-hide-sm-down"
           >
-            <IonButton color="dark" expand="block" fill="outline">
+            <IonButton
+              color="dark"
+              expand="block"
+              fill="outline"
+              routerLink={routeCancel}
+            >
               Cancelar
             </IonButton>
           </IonCol>
@@ -157,5 +224,19 @@ const ReceiverForm: React.FC<ReceiverFormProps> = () => {
     </form>
   );
 };
+
+ReceiverForm.fragment = gql`
+  fragment InvoiceProfileInfo on InvoiceProfile {
+    rfc
+    razonSocial
+    direccion {
+      calle
+      numeroExterior
+      numeroInterior
+      colonia
+      codigoPostal
+    }
+  }
+`;
 
 export default ReceiverForm;
