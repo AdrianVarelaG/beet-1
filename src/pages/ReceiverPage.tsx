@@ -13,46 +13,84 @@ import {
   useSetInvoiceProfileMutation,
   IInvoiceProfileInput,
   GetMenuConfigDocument,
+  IGetMenuConfigQuery,
+  ISetInvoiceProfileMutation,
+  GetInvoiceProfileDocument,
 } from "../generated/graphql";
 import ConfirmInvoiceProfile from "../components/Settings/ConfirmInvoiceProfile";
 import { useHistory } from "react-router";
+import ReceiverLoading from "../components/Loading/ReceiverLoading";
+import Spinner from "../components/Spinner/Spinner";
 
 const ReceiverPage = () => {
   const { loading, data } = useGetInvoiceProfileQuery();
   const history = useHistory();
-  const [setInvoiceProfile, {data: mutationData}] = useSetInvoiceProfileMutation({
-    refetchQueries: [{ query: GetMenuConfigDocument }],
+  const [
+    setInvoiceProfile,
+    { data: mutationData, loading: LoadingMutation },
+  ] = useSetInvoiceProfileMutation({
+    refetchQueries:[{query: GetInvoiceProfileDocument}],
+    update: (store, { data }: { data: ISetInvoiceProfileMutation }) => {
+      try {
+        const configMenu = store.readQuery<IGetMenuConfigQuery>({
+          query: GetMenuConfigDocument,
+        });
+        if (configMenu && configMenu.configuration &&  data?.updateInvoiceProfile?.invoiceProfile?.rfc) {
+          const rfc: string = data.updateInvoiceProfile.invoiceProfile.rfc;
+          const updateInvoiceProfile = {
+            ...configMenu.configuration.invoiceProfile,
+            rfc: rfc,
+          };
+          const updatedConfig = {
+            ...configMenu.configuration,
+            invoiceProfile: updateInvoiceProfile,
+          };
+          store.writeQuery<IGetMenuConfigQuery>({
+            query: GetMenuConfigDocument,
+            data: { ...configMenu, configuration: updatedConfig },
+          });
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    },
   });
   const [nextValue, setNextValue] = useState<IInvoiceProfileInput>();
 
   const success = mutationData?.updateInvoiceProfile?.success;
 
-  useEffect( () => {
-    if(success){
+  useEffect(() => {
+    if (success) {
       //console.log("Done" + mutationData.updateInvoiceProfile.success);
       history.replace("/settings");
     }
-    return () =>{
+    return () => {
       setNextValue(undefined);
-    }
-  },[success, history] )
+    };
+  }, [success, history]);
 
   const onCancelHandler = useCallback(() => {
     console.log("On Cancel");
     setNextValue(undefined);
   }, []);
 
-  const onConfirmHandler = useCallback((value: IInvoiceProfileInput) =>() => {
-    console.log("On confirmed");
-    setInvoiceProfile({ variables: { input: value } });
-  }, [setInvoiceProfile]);
+  const onConfirmHandler = useCallback(
+    (value: IInvoiceProfileInput) => () => {
+      console.log("On confirmed");
+      setInvoiceProfile({ variables: { input: value } });
+    },
+    [setInvoiceProfile]
+  );
 
   const updateHandler = useCallback((input: IInvoiceProfileInput) => {
     setNextValue(input);
   }, []);
 
+  if (loading) return <ReceiverLoading />;
+
   return (
     <IonContent>
+      {LoadingMutation && <Spinner />}
       {nextValue && (
         <ConfirmInvoiceProfile
           onCancel={onCancelHandler}
@@ -97,6 +135,9 @@ ReceiverPage.profile = gql`
   mutation setInvoiceProfile($input: InvoiceProfileInput!) {
     updateInvoiceProfile(input: $input) {
       success
+      invoiceProfile {
+        rfc
+      }
     }
   }
 `;

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { IonAlert } from "@ionic/react";
 import { useReceiptCountQuery, IReceiptFilter, IReceiptStatus } from "../../generated/graphql";
+import Spinner from "../Spinner/Spinner";
 
 const filter: IReceiptFilter = {
   status: [
@@ -22,15 +23,17 @@ const ConfirmInvoiceProfile = (props: ConfirmInvoiceProfileProps) => {
   const totalCount = data?.receipts.totalCount;  
 
   useEffect(() => {
-    if (data?.receipts.totalCount && data?.receipts.totalCount > 0) {
+    if (totalCount && totalCount > 0) {
       setShow(true);
-    } else if (data?.receipts.totalCount && data?.receipts.totalCount === 0) {
+    } else if (totalCount && totalCount === 0) {
       onConfirm();
     }
     return () => {
       setShow(false);
     };
-  }, [totalCount]);
+  }, [totalCount, onConfirm]);
+
+  if(loading) return <Spinner />;
 
   return (
     <IonAlert
@@ -44,7 +47,7 @@ const ConfirmInvoiceProfile = (props: ConfirmInvoiceProfileProps) => {
           text: "Cancelar",
           role: "cancel",
           cssClass: "secondary",
-          handler: (blah) => {
+          handler: () => {
             onCancel();
           },
         },

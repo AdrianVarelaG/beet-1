@@ -274,6 +274,10 @@ export type ISetInvoiceProfileMutation = (
   & { updateInvoiceProfile?: Maybe<(
     { __typename?: 'MutationInvoiceProfile' }
     & Pick<IMutationInvoiceProfile, 'success'>
+    & { invoiceProfile?: Maybe<(
+      { __typename?: 'InvoiceProfile' }
+      & Pick<IInvoiceProfile, 'rfc'>
+    )> }
   )> }
 );
 
@@ -480,6 +484,9 @@ export const SetInvoiceProfileDocument = gql`
     mutation setInvoiceProfile($input: InvoiceProfileInput!) {
   updateInvoiceProfile(input: $input) {
     success
+    invoiceProfile {
+      rfc
+    }
   }
 }
     `;

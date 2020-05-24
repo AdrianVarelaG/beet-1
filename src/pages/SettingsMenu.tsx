@@ -10,7 +10,7 @@ import {
   useGetMenuConfigQuery,
   useUpdateInvoiceResultNotificationMutation,
 } from "../generated/graphql";
-import ListLoading from "../components/Loading/ListLoading";
+import ListLoading from "../components/Loading/components/ListLoading";
 import InvoiceNotification from "../components/Settings/InvoiceNotification";
 
 const SettingsMenu = () => {
