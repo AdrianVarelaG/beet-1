@@ -5,11 +5,11 @@ import {
   IonCard,
   IonCardHeader,
   IonCardTitle,
+  IonCardContent,
 } from "@ionic/react";
 import ReceiptComponent from "./Receipt";
 import gql from "graphql-tag";
 import { IReceiptsListFragment } from "../../generated/graphql";
-
 
 interface Props {
   data?: IReceiptsListFragment;
@@ -18,7 +18,7 @@ interface Props {
 const Receipts = (props: Props) => {
   const [startDeleting, setStartDeleting] = useState(false);
   const slidingOptionsRef = useRef<HTMLIonItemSlidingElement>(null);
-  const {data} = props;
+  const { data } = props;
 
   const startDeleteHandler = (receiptId: string) => {
     setStartDeleting(true);
@@ -59,7 +59,6 @@ const Receipts = (props: Props) => {
         ]}
       />
       <IonCard className="ion-no-margin ion-margin-start ion-margin-end">
-        {items && items.length > 0 && <IonList>{items}</IonList>}
         {(!items || items.length === 0) && (
           <IonCardHeader>
             <IonCardTitle className="ion-text-center">
@@ -67,6 +66,9 @@ const Receipts = (props: Props) => {
             </IonCardTitle>
           </IonCardHeader>
         )}
+        <IonCardContent className="ion-no-padding">
+          {items && items.length > 0 && <IonList>{items}</IonList>}
+        </IonCardContent>
       </IonCard>
     </Fragment>
   );
@@ -79,6 +81,6 @@ Receipts.fragment = gql`
     }
   }
   ${ReceiptComponent.fragment}
-`
+`;
 
 export default Receipts;

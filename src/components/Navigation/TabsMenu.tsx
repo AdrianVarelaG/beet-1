@@ -15,6 +15,8 @@ import Home from "../../pages/Home";
 import MessagesPage from "../../pages/Messages";
 import Receipts from "../../pages/ReceiptPage";
 
+import "./tabMenu.css";
+
 const TabsMenu: React.FC = () => (
     <IonTabs>
       <IonRouterOutlet>
@@ -29,12 +31,6 @@ const TabsMenu: React.FC = () => (
             <Receipts/>
           </RouteMenu>
         </Route>
-        {/* <Route path={`/receipts/receipt/:id`}>
-          <RouteBackMenu title="Recibo" redirectBack="/receipts">
-            <ReceiptDetail />
-          </RouteBackMenu>
-        </Route>
-         */}
          <Route path="/messages" exact={true}>
           <RouteMenu title="Notificaciones">
             <MessagesPage />

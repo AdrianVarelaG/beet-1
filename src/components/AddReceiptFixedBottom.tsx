@@ -52,7 +52,7 @@ const AddReceiptFixedBottom = (props: Props) => {
           accept="image/*"
           capture="environment"
         />
-        <IonFabButton onClick={onClickHandler} color="secondary" size="small">
+        <IonFabButton onClick={onClickHandler} color="secondary">
           <IonIcon icon={icon} />
         </IonFabButton>
       </IonFab>
