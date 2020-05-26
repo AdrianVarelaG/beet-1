@@ -6,7 +6,6 @@ import MessageLoading from "../components/Messages/MessageLoading";
 export interface Message {
   id: string;
   title: string;
-  type: string;
   content: string;
   date: string;
   status: string;
@@ -21,7 +20,6 @@ const MessagesPage = () => {
         {
           id: "1",
           title: "Error al generar factura",
-          type: "error",
           content:
             'La factura del establecimiento "OXXO" no fue posible generarla ya que el campo de folio no es legible en el ticket de compra ',
           date: "2019-07-07",
@@ -30,7 +28,6 @@ const MessagesPage = () => {
         {
           id: "2",
           title: "Factura generada con exito",
-          type: "ok",
           content:
             'Su factia del establecimiento "Costco" por $ 1230.00 se genero con exito',
           date: "2019-07-01",
