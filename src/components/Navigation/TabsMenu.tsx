@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   IonTabs,
   IonTabButton,
@@ -6,18 +6,22 @@ import {
   IonLabel,
   IonRouterOutlet,
   IonTabBar,
-  IonBadge
+  IonBadge,
 } from "@ionic/react";
 import { Route, Redirect } from "react-router";
 import { home, list, mailOpen } from "ionicons/icons";
 import RouteMenu from "./RouteMenu";
 import Home from "../../pages/Home";
-import MessagesPage from "../../pages/Messages";
+import MessagesPage from "../../pages/MessagesPage";
 import Receipts from "../../pages/ReceiptPage";
 
 import "./tabMenu.css";
+import { UserContext } from "../../context/user-context";
 
-const TabsMenu: React.FC = () => (
+const TabsMenu: React.FC = () => {
+  const ctx = useContext(UserContext);
+
+  return (
     <IonTabs>
       <IonRouterOutlet>
         <Redirect exact from="/" to="/home" />
@@ -26,12 +30,12 @@ const TabsMenu: React.FC = () => (
             <Home />
           </RouteMenu>
         </Route>
-         <Route path="/receipts" exact>
+        <Route path="/receipts" exact>
           <RouteMenu title="Recibos">
-            <Receipts/>
+            <Receipts />
           </RouteMenu>
         </Route>
-         <Route path="/messages" exact={true}>
+        <Route path="/messages" exact={true}>
           <RouteMenu title="Notificaciones">
             <MessagesPage />
           </RouteMenu>
@@ -49,10 +53,13 @@ const TabsMenu: React.FC = () => (
         <IonTabButton tab="messages" href="/messages">
           <IonIcon icon={mailOpen} />
           <IonLabel>Notificaciones</IonLabel>
-          <IonBadge>22</IonBadge>
+          {ctx.unReadNotification && (
+            <IonBadge>{ctx.unReadNotification}</IonBadge>
+          )}
         </IonTabButton>
       </IonTabBar>
     </IonTabs>
-);
+  );
+};
 
 export default TabsMenu;

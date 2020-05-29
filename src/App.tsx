@@ -29,45 +29,46 @@ import "./theme/variables.css";
 import Logout from "./components/logout";
 import RouteMenu from "./components/Navigation/RouteMenu";
 import RouteBackMenu from "./components/Navigation/RouteBackMenu";
+import UserContextProvider from "./context/user-context";
 
 const Menu = React.lazy(() => import("./components/Navigation/Menu"));
 const SettingsMenu = React.lazy(() => import("./pages/SettingsMenu"));
 const TabsMenu = React.lazy(() => import("./components/Navigation/TabsMenu"));
-const SettingsPage = React.lazy(() =>
-  import("./pages/ReceiverPage")
-);
+const SettingsPage = React.lazy(() => import("./pages/ReceiverPage"));
 
 const App: React.FC = () => (
-  <IonApp>
-    <IonReactRouter>
-      <React.Suspense fallback={<IonSpinner />}>
-        <IonSplitPane contentId="main">
-          <Menu />
-          <IonRouterOutlet id="main">
-            <Route path="/settings/receiver">
-              <RouteBackMenu
-                redirectBack="/settings"
-                title="Perfil de facturacion"
-              >
-                <SettingsPage />
-              </RouteBackMenu>
-            </Route>
-            <Route path="/settings">
-              <RouteMenu title="Configuracion">
-                <SettingsMenu />
-              </RouteMenu>
-            </Route>
-            <Route path="/logout">
-              <Logout />
-            </Route>
-            <Route path="/">
-              <TabsMenu />
-            </Route>
-          </IonRouterOutlet>
-        </IonSplitPane>
-      </React.Suspense>
-    </IonReactRouter>
-  </IonApp>
+  <UserContextProvider>
+    <IonApp>
+      <IonReactRouter>
+        <React.Suspense fallback={<IonSpinner />}>
+          <IonSplitPane contentId="main">
+            <Menu />
+            <IonRouterOutlet id="main">
+              <Route path="/settings/receiver">
+                <RouteBackMenu
+                  redirectBack="/settings"
+                  title="Perfil de facturacion"
+                >
+                  <SettingsPage />
+                </RouteBackMenu>
+              </Route>
+              <Route path="/settings">
+                <RouteMenu title="Configuracion">
+                  <SettingsMenu />
+                </RouteMenu>
+              </Route>
+              <Route path="/logout">
+                <Logout />
+              </Route>
+              <Route path="/">
+                <TabsMenu />
+              </Route>
+            </IonRouterOutlet>
+          </IonSplitPane>
+        </React.Suspense>
+      </IonReactRouter>
+    </IonApp>
+  </UserContextProvider>
 );
 
 export default App;

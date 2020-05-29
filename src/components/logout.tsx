@@ -8,6 +8,7 @@ interface LogoutProps {}
 const Logout: React.FC<LogoutProps> = () => {
 
   const authContext = useContext(AuthContext);
+
   useEffect(() =>{
     authContext.logout!();
   }, [authContext.logout])

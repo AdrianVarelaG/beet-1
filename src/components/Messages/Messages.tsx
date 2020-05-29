@@ -1,25 +1,51 @@
 import React from "react";
-import { IonList } from "@ionic/react";
+import {
+  IonList,
+  IonCardHeader,
+  IonCardTitle,
+  IonCardContent,
+} from "@ionic/react";
 import Message from "./Message";
-import { Message as MessageType } from "../../pages/Messages";
+import gql from "graphql-tag";
+import { INotificationListFragment } from "../../generated/graphql";
 
-interface MessagesProps {
-  messagesList: MessageType[];
+interface Props {
+  data?: INotificationListFragment;
 }
 
-const Messages : React.FC<MessagesProps> = ({ messagesList }) => {
-  const items = messagesList.map(m => (
-    <Message
-      key={m.id}
-      id={m.id}
-      title={m.title}
-      content={m.content}
-      status={m.status}
-      date={m.date}
-    />
-  ));
+const Messages = (props: Props) => {
+  const messagesList = props.data?.notifications;
 
-  return <IonList>{items}</IonList>;
+  if (!messagesList)
+    return (
+      
+        <IonCardHeader>
+          <IonCardTitle className="ion-text-center">
+            No se encontraron Notificaciones
+          </IonCardTitle>
+        </IonCardHeader>
+
+    );
+
+  const items = messagesList.map((m) => <Message key={m?.id} data={m} />);
+
+  return (
+  
+      <IonCardContent className="ion-no-padding">
+        <IonList>{items}</IonList>
+      </IonCardContent>
+  
+  );
 };
+
+Messages.fragment = gql`
+  fragment NotificationList on NotificationResponse {
+    totalCount
+    notifications {
+      ...NotificationDataList
+    }
+  }
+  ${Message.fragment}
+`;
 
 export default Messages;

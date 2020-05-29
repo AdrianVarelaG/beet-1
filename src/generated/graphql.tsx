@@ -14,14 +14,6 @@ export type Scalars = {
   Upload: any;
 };
 
-export type INotification = {
-   __typename?: 'Notification';
-  title?: Maybe<Scalars['String']>;
-  message?: Maybe<Scalars['String']>;
-  date?: Maybe<Scalars['String']>;
-  readed?: Maybe<Scalars['Boolean']>;
-};
-
 export type IConfiguration = {
    __typename?: 'Configuration';
   invoiceProfile?: Maybe<IInvoiceProfile>;
@@ -82,8 +74,15 @@ export type IMutationInvoiceProfile = IMutationResponse & {
 export type IQuery = {
    __typename?: 'Query';
   configuration?: Maybe<IConfiguration>;
+  notifications: INotificationResponse;
+  unreadNotifications: Scalars['Int'];
   receipts: IReceiptResponse;
   receipt?: Maybe<IReceipt>;
+};
+
+
+export type IQueryNotificationsArgs = {
+  input?: Maybe<INotificationFilter>;
 };
 
 
@@ -100,6 +99,7 @@ export type IMutation = {
    __typename?: 'Mutation';
   updateNotificationInvoiceResult?: Maybe<IMutationConfigNotification>;
   updateInvoiceProfile?: Maybe<IMutationInvoiceProfile>;
+  readNotification: IMutationReadNotification;
   createReceipt: IMutationReceiptResponse;
 };
 
@@ -114,8 +114,42 @@ export type IMutationUpdateInvoiceProfileArgs = {
 };
 
 
+export type IMutationReadNotificationArgs = {
+  input: Scalars['ID'];
+};
+
+
 export type IMutationCreateReceiptArgs = {
   file: Scalars['Upload'];
+};
+
+export type INotification = {
+   __typename?: 'Notification';
+  id: Scalars['ID'];
+  title: Scalars['String'];
+  message: Scalars['String'];
+  date: Scalars['String'];
+  read: Scalars['Boolean'];
+  receipt?: Maybe<IReceipt>;
+};
+
+export type INotificationResponse = IResponse & {
+   __typename?: 'NotificationResponse';
+  totalCount: Scalars['Int'];
+  notifications: Array<Maybe<INotification>>;
+};
+
+export type IMutationReadNotification = IMutationResponse & {
+   __typename?: 'MutationReadNotification';
+  code: Scalars['String'];
+  success: Scalars['Boolean'];
+  message: Scalars['String'];
+  notification?: Maybe<INotification>;
+};
+
+export type INotificationFilter = {
+  receiptId?: Maybe<Scalars['ID']>;
+  read?: Maybe<Scalars['Boolean']>;
 };
 
 export type IReceipt = {
@@ -185,6 +219,20 @@ export type IResponse = {
   totalCount: Scalars['Int'];
 };
 
+export type INotificationDataListFragment = (
+  { __typename?: 'Notification' }
+  & Pick<INotification, 'id' | 'title' | 'message' | 'read' | 'date'>
+);
+
+export type INotificationListFragment = (
+  { __typename?: 'NotificationResponse' }
+  & Pick<INotificationResponse, 'totalCount'>
+  & { notifications: Array<Maybe<(
+    { __typename?: 'Notification' }
+    & INotificationDataListFragment
+  )>> }
+);
+
 export type IReceiptDataListFragment = (
   { __typename?: 'Receipt' }
   & Pick<IReceipt, 'id' | 'business' | 'createdDate' | 'amount' | 'status' | 'date'>
@@ -205,6 +253,25 @@ export type IInvoiceProfileInfoFragment = (
     { __typename?: 'Address' }
     & Pick<IAddress, 'calle' | 'numeroExterior' | 'numeroInterior' | 'colonia' | 'codigoPostal'>
   )> }
+);
+
+export type IGetUnReadNotificationNumberQueryVariables = {};
+
+
+export type IGetUnReadNotificationNumberQuery = (
+  { __typename?: 'Query' }
+  & Pick<IQuery, 'unreadNotifications'>
+);
+
+export type IGetMessagesQueryVariables = {};
+
+
+export type IGetMessagesQuery = (
+  { __typename?: 'Query' }
+  & { notifications: (
+    { __typename?: 'NotificationResponse' }
+    & INotificationListFragment
+  ) }
 );
 
 export type IReceiptListQueryVariables = {
@@ -315,6 +382,23 @@ export type IUpdateInvoiceResultNotificationMutation = (
   )> }
 );
 
+export const NotificationDataListFragmentDoc = gql`
+    fragment NotificationDataList on Notification {
+  id
+  title
+  message
+  read
+  date
+}
+    `;
+export const NotificationListFragmentDoc = gql`
+    fragment NotificationList on NotificationResponse {
+  totalCount
+  notifications {
+    ...NotificationDataList
+  }
+}
+    ${NotificationDataListFragmentDoc}`;
 export const ReceiptDataListFragmentDoc = gql`
     fragment ReceiptDataList on Receipt {
   id
@@ -345,6 +429,68 @@ export const InvoiceProfileInfoFragmentDoc = gql`
   }
 }
     `;
+export const GetUnReadNotificationNumberDocument = gql`
+    query getUnReadNotificationNumber {
+  unreadNotifications
+}
+    `;
+
+/**
+ * __useGetUnReadNotificationNumberQuery__
+ *
+ * To run a query within a React component, call `useGetUnReadNotificationNumberQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetUnReadNotificationNumberQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetUnReadNotificationNumberQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetUnReadNotificationNumberQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<IGetUnReadNotificationNumberQuery, IGetUnReadNotificationNumberQueryVariables>) {
+        return ApolloReactHooks.useQuery<IGetUnReadNotificationNumberQuery, IGetUnReadNotificationNumberQueryVariables>(GetUnReadNotificationNumberDocument, baseOptions);
+      }
+export function useGetUnReadNotificationNumberLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<IGetUnReadNotificationNumberQuery, IGetUnReadNotificationNumberQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<IGetUnReadNotificationNumberQuery, IGetUnReadNotificationNumberQueryVariables>(GetUnReadNotificationNumberDocument, baseOptions);
+        }
+export type GetUnReadNotificationNumberQueryHookResult = ReturnType<typeof useGetUnReadNotificationNumberQuery>;
+export type GetUnReadNotificationNumberLazyQueryHookResult = ReturnType<typeof useGetUnReadNotificationNumberLazyQuery>;
+export type GetUnReadNotificationNumberQueryResult = ApolloReactCommon.QueryResult<IGetUnReadNotificationNumberQuery, IGetUnReadNotificationNumberQueryVariables>;
+export const GetMessagesDocument = gql`
+    query getMessages {
+  notifications {
+    ...NotificationList
+  }
+}
+    ${NotificationListFragmentDoc}`;
+
+/**
+ * __useGetMessagesQuery__
+ *
+ * To run a query within a React component, call `useGetMessagesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetMessagesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetMessagesQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetMessagesQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<IGetMessagesQuery, IGetMessagesQueryVariables>) {
+        return ApolloReactHooks.useQuery<IGetMessagesQuery, IGetMessagesQueryVariables>(GetMessagesDocument, baseOptions);
+      }
+export function useGetMessagesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<IGetMessagesQuery, IGetMessagesQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<IGetMessagesQuery, IGetMessagesQueryVariables>(GetMessagesDocument, baseOptions);
+        }
+export type GetMessagesQueryHookResult = ReturnType<typeof useGetMessagesQuery>;
+export type GetMessagesLazyQueryHookResult = ReturnType<typeof useGetMessagesLazyQuery>;
+export type GetMessagesQueryResult = ApolloReactCommon.QueryResult<IGetMessagesQuery, IGetMessagesQueryVariables>;
 export const ReceiptListDocument = gql`
     query ReceiptList($input: ReceiptFilter) {
   receipts(input: $input) {

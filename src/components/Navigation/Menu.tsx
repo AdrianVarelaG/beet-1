@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   IonIcon,
   IonMenu,
@@ -15,6 +15,7 @@ import {
 } from "@ionic/react";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 import { home, list, mailOpen, settings, help, logOut } from "ionicons/icons";
+import { UserContext } from "../../context/user-context";
 
 interface MenuItem {
   title: string;
@@ -32,7 +33,7 @@ const routes: ListMenu = {
   appPages: [
     { title: "Inicio", path: "/", icon: home },
     { title: "Recibos", path: "/receipts", icon: list },
-    { title: "Notificaciones", path: "/messages", icon: mailOpen, badge: 22 },
+    { title: "Notificaciones", path: "/messages", icon: mailOpen },
   ],
   loggedInPages: [
     { title: "Configuracion", path: "/settings", icon: settings },
@@ -44,6 +45,10 @@ const routes: ListMenu = {
 interface MenuProps extends RouteComponentProps {}
 
 const Menu: React.FC<MenuProps> = () => {
+  const ctx = useContext(UserContext);
+
+  if (ctx) routes.appPages[2].badge = ctx.unReadNotification;
+
   function renderListItems(list: MenuItem[]) {
     return list
       .filter((route) => !!route.path)
@@ -59,21 +64,20 @@ const Menu: React.FC<MenuProps> = () => {
   }
 
   return (
-
-      <IonMenu contentId="main" type="overlay">
-        <IonHeader>
-          <IonToolbar>
-            <IonTitle>Menu</IonTitle>
-          </IonToolbar>
-        </IonHeader>
-        <IonContent>
-          <IonList>{renderListItems(routes.appPages)}</IonList>
-          <IonList>
-            <IonListHeader>Cuenta</IonListHeader>
-            {renderListItems(routes.loggedInPages)}
-          </IonList>
-        </IonContent>
-      </IonMenu>
+    <IonMenu contentId="main" type="overlay">
+      <IonHeader>
+        <IonToolbar>
+          <IonTitle>Menu</IonTitle>
+        </IonToolbar>
+      </IonHeader>
+      <IonContent>
+        <IonList>{renderListItems(routes.appPages)}</IonList>
+        <IonList>
+          <IonListHeader>Cuenta</IonListHeader>
+          {renderListItems(routes.loggedInPages)}
+        </IonList>
+      </IonContent>
+    </IonMenu>
   );
 };
 
