@@ -36,8 +36,8 @@ const setIcon = (status: IReceiptStatus) => {
 };
 
 interface Props {
-  slidingRef: React.Ref<HTMLIonItemSlidingElement>;
-  onDelete: (receiptId: string) => void;
+  slidingRef?: React.Ref<HTMLIonItemSlidingElement>;
+  onDelete?: (receiptId: string) => void;
   receipt: IReceiptDataListFragment | null;
 }
 
@@ -49,7 +49,8 @@ const Receipt = (props: Props) => {
   if (receipt!.status === IReceiptStatus.Error) color = "danger";
 
   const deleteHandler = () => {
-    onDelete(receipt!.id);
+    if(onDelete)
+      onDelete(receipt!.id);
   };
 
   const item = (
@@ -71,6 +72,8 @@ const Receipt = (props: Props) => {
       </IonLabel>
     </IonItem>
   );
+
+  if(!slidingRef) return item;
 
   return (
     <IonItemSliding ref={slidingRef}>

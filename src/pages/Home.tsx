@@ -1,14 +1,21 @@
-import { IonContent } from '@ionic/react';
-import React from 'react';
-import ExploreContainer from '../components/ExploreContainer';
-import './Home.css';
+import {
+  IonContent,
+
+} from "@ionic/react";
+import React from "react";
+import ExploreContainer from "../components/ExploreContainer";
+import "./Home.css";
+
 
 const Home: React.FC = () => {
   return (
-      <IonContent>
+    <IonContent>
+
+
+      {
         <ExploreContainer />
-      </IonContent>
-    
+      }
+    </IonContent>
   );
 };
 

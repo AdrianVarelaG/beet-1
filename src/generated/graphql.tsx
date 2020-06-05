@@ -75,6 +75,7 @@ export type IQuery = {
    __typename?: 'Query';
   configuration?: Maybe<IConfiguration>;
   notifications: INotificationResponse;
+  notification: INotificationResponse;
   unreadNotifications: Scalars['Int'];
   receipts: IReceiptResponse;
   receipt?: Maybe<IReceipt>;
@@ -83,6 +84,11 @@ export type IQuery = {
 
 export type IQueryNotificationsArgs = {
   input?: Maybe<INotificationFilter>;
+};
+
+
+export type IQueryNotificationArgs = {
+  input: Scalars['ID'];
 };
 
 
@@ -224,6 +230,15 @@ export type INotificationDataListFragment = (
   & Pick<INotification, 'id' | 'title' | 'message' | 'read' | 'date'>
 );
 
+export type INotificationInfoFragment = (
+  { __typename?: 'Notification' }
+  & Pick<INotification, 'title' | 'message' | 'date'>
+  & { receipt?: Maybe<(
+    { __typename?: 'Receipt' }
+    & IReceiptDataListFragment
+  )> }
+);
+
 export type INotificationListFragment = (
   { __typename?: 'NotificationResponse' }
   & Pick<INotificationResponse, 'totalCount'>
@@ -261,6 +276,36 @@ export type IGetUnReadNotificationNumberQueryVariables = {};
 export type IGetUnReadNotificationNumberQuery = (
   { __typename?: 'Query' }
   & Pick<IQuery, 'unreadNotifications'>
+);
+
+export type IReadNotificationMutationVariables = {
+  input: Scalars['ID'];
+};
+
+
+export type IReadNotificationMutation = (
+  { __typename?: 'Mutation' }
+  & { readNotification: (
+    { __typename?: 'MutationReadNotification' }
+    & Pick<IMutationReadNotification, 'success'>
+  ) }
+);
+
+export type IGetNotificationQueryVariables = {
+  input: Scalars['ID'];
+};
+
+
+export type IGetNotificationQuery = (
+  { __typename?: 'Query' }
+  & { notification: (
+    { __typename?: 'NotificationResponse' }
+    & Pick<INotificationResponse, 'totalCount'>
+    & { notifications: Array<Maybe<(
+      { __typename?: 'Notification' }
+      & INotificationInfoFragment
+    )>> }
+  ) }
 );
 
 export type IGetMessagesQueryVariables = {};
@@ -382,6 +427,26 @@ export type IUpdateInvoiceResultNotificationMutation = (
   )> }
 );
 
+export const ReceiptDataListFragmentDoc = gql`
+    fragment ReceiptDataList on Receipt {
+  id
+  business
+  createdDate
+  amount
+  status
+  date
+}
+    `;
+export const NotificationInfoFragmentDoc = gql`
+    fragment NotificationInfo on Notification {
+  title
+  message
+  date
+  receipt {
+    ...ReceiptDataList
+  }
+}
+    ${ReceiptDataListFragmentDoc}`;
 export const NotificationDataListFragmentDoc = gql`
     fragment NotificationDataList on Notification {
   id
@@ -399,16 +464,6 @@ export const NotificationListFragmentDoc = gql`
   }
 }
     ${NotificationDataListFragmentDoc}`;
-export const ReceiptDataListFragmentDoc = gql`
-    fragment ReceiptDataList on Receipt {
-  id
-  business
-  createdDate
-  amount
-  status
-  date
-}
-    `;
 export const ReceiptsListFragmentDoc = gql`
     fragment ReceiptsList on ReceiptResponse {
   receipts {
@@ -459,6 +514,74 @@ export function useGetUnReadNotificationNumberLazyQuery(baseOptions?: ApolloReac
 export type GetUnReadNotificationNumberQueryHookResult = ReturnType<typeof useGetUnReadNotificationNumberQuery>;
 export type GetUnReadNotificationNumberLazyQueryHookResult = ReturnType<typeof useGetUnReadNotificationNumberLazyQuery>;
 export type GetUnReadNotificationNumberQueryResult = ApolloReactCommon.QueryResult<IGetUnReadNotificationNumberQuery, IGetUnReadNotificationNumberQueryVariables>;
+export const ReadNotificationDocument = gql`
+    mutation readNotification($input: ID!) {
+  readNotification(input: $input) {
+    success
+  }
+}
+    `;
+export type IReadNotificationMutationFn = ApolloReactCommon.MutationFunction<IReadNotificationMutation, IReadNotificationMutationVariables>;
+
+/**
+ * __useReadNotificationMutation__
+ *
+ * To run a mutation, you first call `useReadNotificationMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useReadNotificationMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [readNotificationMutation, { data, loading, error }] = useReadNotificationMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useReadNotificationMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<IReadNotificationMutation, IReadNotificationMutationVariables>) {
+        return ApolloReactHooks.useMutation<IReadNotificationMutation, IReadNotificationMutationVariables>(ReadNotificationDocument, baseOptions);
+      }
+export type ReadNotificationMutationHookResult = ReturnType<typeof useReadNotificationMutation>;
+export type ReadNotificationMutationResult = ApolloReactCommon.MutationResult<IReadNotificationMutation>;
+export type ReadNotificationMutationOptions = ApolloReactCommon.BaseMutationOptions<IReadNotificationMutation, IReadNotificationMutationVariables>;
+export const GetNotificationDocument = gql`
+    query getNotification($input: ID!) {
+  notification(input: $input) {
+    totalCount
+    notifications {
+      ...NotificationInfo
+    }
+  }
+}
+    ${NotificationInfoFragmentDoc}`;
+
+/**
+ * __useGetNotificationQuery__
+ *
+ * To run a query within a React component, call `useGetNotificationQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetNotificationQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetNotificationQuery({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useGetNotificationQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<IGetNotificationQuery, IGetNotificationQueryVariables>) {
+        return ApolloReactHooks.useQuery<IGetNotificationQuery, IGetNotificationQueryVariables>(GetNotificationDocument, baseOptions);
+      }
+export function useGetNotificationLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<IGetNotificationQuery, IGetNotificationQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<IGetNotificationQuery, IGetNotificationQueryVariables>(GetNotificationDocument, baseOptions);
+        }
+export type GetNotificationQueryHookResult = ReturnType<typeof useGetNotificationQuery>;
+export type GetNotificationLazyQueryHookResult = ReturnType<typeof useGetNotificationLazyQuery>;
+export type GetNotificationQueryResult = ApolloReactCommon.QueryResult<IGetNotificationQuery, IGetNotificationQueryVariables>;
 export const GetMessagesDocument = gql`
     query getMessages {
   notifications {

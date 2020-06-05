@@ -26,7 +26,7 @@ const Message = ({ data }: Props) => {
   ) : null;
 
   return (
-    <IonItem button detail={false}>
+    <IonItem button detail={false} routerLink={`/message/${data?.id}`}>
       {message}
     </IonItem>
   );

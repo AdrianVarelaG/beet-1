@@ -18,23 +18,19 @@ const Messages = (props: Props) => {
 
   if (!messagesList)
     return (
-      
-        <IonCardHeader>
-          <IonCardTitle className="ion-text-center">
-            No se encontraron Notificaciones
-          </IonCardTitle>
-        </IonCardHeader>
-
+      <IonCardHeader>
+        <IonCardTitle className="ion-text-center">
+          No se encontraron Notificaciones
+        </IonCardTitle>
+      </IonCardHeader>
     );
 
   const items = messagesList.map((m) => <Message key={m?.id} data={m} />);
 
   return (
-  
-      <IonCardContent className="ion-no-padding">
-        <IonList>{items}</IonList>
-      </IonCardContent>
-  
+    <IonCardContent className="ion-no-padding">
+      <IonList>{items}</IonList>
+    </IonCardContent>
   );
 };
 
