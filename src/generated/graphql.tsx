@@ -303,6 +303,7 @@ export type IGetNotificationQuery = (
     & Pick<INotificationResponse, 'totalCount'>
     & { notifications: Array<Maybe<(
       { __typename?: 'Notification' }
+      & Pick<INotification, 'id' | 'read'>
       & INotificationInfoFragment
     )>> }
   ) }
@@ -551,6 +552,8 @@ export const GetNotificationDocument = gql`
   notification(input: $input) {
     totalCount
     notifications {
+      id
+      read
       ...NotificationInfo
     }
   }

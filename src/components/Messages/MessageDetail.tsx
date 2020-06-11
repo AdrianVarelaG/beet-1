@@ -18,7 +18,6 @@ interface Props {
 const MessageDetail = (props: Props) => {
   const { data } = props;
   const receipt = data?.receipt;
-  console.log("Rendering details");
 
   return (
     <IonCard>

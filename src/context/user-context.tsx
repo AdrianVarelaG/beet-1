@@ -5,6 +5,7 @@ import { useGetUnReadNotificationNumberQuery } from "../generated/graphql";
 
 interface IUserContext {
   unReadNotification: number;
+  updateReadNotification: () => void;
 }
 
 export const UserContext = React.createContext<Partial<IUserContext>>({});
@@ -15,7 +16,7 @@ const UserContextProvider: React.FC & {
   const [unReadNotification, setUnReadNotification] = useState<
     number | undefined
   >();
-  const { data } = useGetUnReadNotificationNumberQuery({ pollInterval: 30000 });
+  const { data, refetch } = useGetUnReadNotificationNumberQuery();
   const unread = data?.unreadNotifications;
 
   useEffect(() => {
@@ -23,8 +24,12 @@ const UserContextProvider: React.FC & {
     if (unread && unread === 0) setUnReadNotification(undefined);
   }, [unread]);
 
+  const updateReadNotificationHandler = () => {
+    refetch();
+  }
+
   return (
-    <UserContext.Provider value={{ unReadNotification }}>
+    <UserContext.Provider value={{ unReadNotification, updateReadNotification: updateReadNotificationHandler }}>
       {props.children}
     </UserContext.Provider>
   );

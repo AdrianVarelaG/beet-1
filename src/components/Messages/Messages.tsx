@@ -11,12 +11,16 @@ import { INotificationListFragment } from "../../generated/graphql";
 
 interface Props {
   data?: INotificationListFragment;
+  filter: String;
 }
 
 const Messages = (props: Props) => {
-  const messagesList = props.data?.notifications;
+  const messagesList =
+    props.filter === "unread"
+      ? props.data?.notifications.filter((m) => m?.read === false)
+      : props.data?.notifications;
 
-  if (!messagesList)
+  if (!messagesList || messagesList.length === 0)
     return (
       <IonCardHeader>
         <IonCardTitle className="ion-text-center">

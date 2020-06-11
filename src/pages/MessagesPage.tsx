@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import {
   IonContent,
   IonSegment,
@@ -16,6 +16,7 @@ import { useGetMessagesQuery } from "../generated/graphql";
 
 const MessagesPage = () => {
   const { loading, data } = useGetMessagesQuery();
+  const [segment, setSegment] = useState("all");
 
   if (loading)
     return (
@@ -29,13 +30,14 @@ const MessagesPage = () => {
       <IonContent>
         <IonGrid>
           <IonRow>
-            <IonCol size="10" push="1" >
+            <IonCol size="10" push="1">
               <IonSegment
-                onIonChange={(e) =>
-                  console.log("Segment selected", e.detail.value)
-                }
+                onIonChange={(e) => {
+                  console.log("Segment selected", e.detail.value);
+                  setSegment(e.detail.value!);
+                }}
                 //color="tertiary"
-                value="all"
+                value={segment}
               >
                 <IonSegmentButton value="all">
                   <IonLabel>Todos</IonLabel>
@@ -49,7 +51,7 @@ const MessagesPage = () => {
           <IonRow>
             <IonCol className="ion-no-padding">
               <IonCard className="ion-no-margin ion-margin-start ion-margin-end">
-                <Messages data={data?.notifications} />
+                <Messages data={data?.notifications} filter={segment} />
               </IonCard>
             </IonCol>
           </IonRow>
