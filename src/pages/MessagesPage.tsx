@@ -33,7 +33,6 @@ const MessagesPage = () => {
             <IonCol size="10" push="1">
               <IonSegment
                 onIonChange={(e) => {
-                  console.log("Segment selected", e.detail.value);
                   setSegment(e.detail.value!);
                 }}
                 //color="tertiary"

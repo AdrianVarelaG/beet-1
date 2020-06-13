@@ -21,15 +21,20 @@ const UserContextProvider: React.FC & {
 
   useEffect(() => {
     if (unread && unread > 0) setUnReadNotification(unread);
-    if (unread && unread === 0) setUnReadNotification(undefined);
+    else setUnReadNotification(undefined);
   }, [unread]);
 
   const updateReadNotificationHandler = () => {
     refetch();
-  }
+  };
 
   return (
-    <UserContext.Provider value={{ unReadNotification, updateReadNotification: updateReadNotificationHandler }}>
+    <UserContext.Provider
+      value={{
+        unReadNotification,
+        updateReadNotification: updateReadNotificationHandler,
+      }}
+    >
       {props.children}
     </UserContext.Provider>
   );
