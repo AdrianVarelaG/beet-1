@@ -4,7 +4,6 @@
   "private": true,
   "dependencies": {
     "@apollo/react-hooks": "^3.1.4",
-    "@graphql-codegen/cli": "^1.13.5",
     "@ionic/react": "^5.0.7",
     "@ionic/react-router": "^5.0.7",
     "@testing-library/jest-dom": "^4.2.4",
@@ -39,7 +38,7 @@
   "scripts": {
     "start": "chmod +x ./env.sh && ./env.sh && cp env-config.js ./public/ && react-scripts start",
     "build": "react-scripts build",
-    "test":"exit 0",
+    "test": "exit 0",
     "eject": "react-scripts eject",
     "generate": "graphql-codegen --config codegen.yml --watch"
   },
@@ -60,9 +59,9 @@
   },
   "description": "An Ionic project",
   "devDependencies": {
-    "@graphql-codegen/typescript": "1.13.5",
-    "@graphql-codegen/typescript-operations": "1.13.5",
-    "@graphql-codegen/typescript-react-apollo": "1.13.5",
-    "@graphql-codegen/cli": "1.13.5"
+    "@graphql-codegen/cli": "^1.19.1",
+    "@graphql-codegen/typescript": "^1.17.11",
+    "@graphql-codegen/typescript-operations": "^1.17.9",
+    "@graphql-codegen/typescript-react-apollo": "1.13.5"
   }
 }
